@@ -1,0 +1,119 @@
+% Copyright 2022 by Paweł Tomulik
+
+\ProvidesFileRCS{tikzlibraryshapes.cnet.symbol.test.code.tex}
+
+\usetikzlibrary{shapes.cnet.symbol}
+\usetikzlibrary{shapes}
+
+\tikzset{
+  cnet symbol test anchor point/.style={
+    very thin,
+    cross out,
+    draw=red,
+    outer sep=0pt,
+    inner sep=1pt
+  },
+  cnet symbol test outline/.style={
+    thick,
+    cnet/picture minimum size=9em,
+    cnet/picture outer sep=.2em,
+    draw,
+    font=\scriptsize,
+    text depth=1em,
+    outer sep=.3em,
+    cnet/picture outline,
+    cnet/picture outline very thin,
+    cnet/picture outline dashed,
+  },
+  cnet symbol test anchors/.pic={
+    \node[cnet symbol,cnet symbol test outline] (I) {Label Text};
+
+    \draw[dash dot, very thin] (I.picture west) -- (I.picture east);
+    \draw[dash dot, very thin] (I.north) -- (I.south);
+    \draw[dash dot, very thin] (I.east) -- (I.west);
+    \draw[dashed, very thin] (I.base east) -- (I.base west);
+    \draw[dashed, very thin] (I.mid east) -- (I.mid west);
+
+    \node[cnet symbol test anchor point] (NE) at (I.north east) {};
+    \draw[-,very thin] (NE) --++ (2em,2em) node[font=\tiny,anchor=south west] {north east};
+
+    \node[cnet symbol test anchor point] (NW) at (I.north west) {};
+    \draw[-,very thin] (NW) --++ (-2em,2em) node[font=\tiny,anchor=south east] {north west};
+
+    \node[cnet symbol test anchor point] (N) at (I.north) {};
+    \draw[-,very thin] (N) --++ (0em,3em) node[font=\tiny,anchor=south] {north};
+
+    \node[cnet symbol test anchor point] (SE) at (I.south east) {};
+    \draw[-,very thin] (SE) --++ (2em,-2em) node[font=\tiny,anchor=north west] {south east};
+
+    \node[cnet symbol test anchor point] (SW) at (I.south west) {};
+    \draw[-,very thin] (SW) --++ (-2em,-2em) node[font=\tiny,anchor=north east] {south west};
+
+    \node[cnet symbol test anchor point] (S) at (I.south) {};
+    \draw[-,very thin] (S) --++ (0em,-3em) node[font=\tiny,anchor=north] {south};
+
+    \node[cnet symbol test anchor point] (E) at (I.east) {};
+    \draw[-,very thin] (E) --++ (3em,.5em) node[font=\tiny,anchor=west] {east};
+
+    \node[cnet symbol test anchor point] (W) at (I.west) {};
+    \draw[-,very thin] (W) --++ (-3em,.5em) node[font=\tiny,anchor=east] {west};
+
+    \node[cnet symbol test anchor point] (C) at (I.center) {};
+    \draw[-,very thin] (C) --++ (-3em,2em) node[font=\tiny,anchor=east] {center};
+
+    \node[cnet symbol test anchor point] (T) at (I.text) {};
+    \draw[-,very thin] (T) --++ (.5em,-1em) node[font=\tiny,anchor=north] {text};
+
+    \node[cnet symbol test anchor point] (B) at (I.base) {};
+    \draw[-,very thin] (B) --++ (1em,-2em) node[font=\tiny,anchor=north] {base};
+
+    \node[cnet symbol test anchor point] (BE) at (I.base east) {};
+    \draw[-,very thin] (BE) --++ (2em,-.8em) node[font=\tiny,anchor=west] {base east};
+
+    \node[cnet symbol test anchor point] (BW) at (I.base west) {};
+    \draw[-,very thin] (BW) --++ (-2em,-.8em) node[font=\tiny,anchor=east] {base west};
+
+    \node[cnet symbol test anchor point] (M) at (I.mid) {};
+    \draw[-,very thin] (M) --++ (2.5em, 1em) node[font=\tiny,anchor=text] {mid};
+
+    \node[cnet symbol test anchor point] (ME) at (I.mid east) {};
+    \draw[-,very thin] (ME) --++ (2em,.8em) node[font=\tiny,anchor=west] {mid east};
+
+    \node[cnet symbol test anchor point] (MW) at (I.mid west) {};
+    \draw[-,very thin] (MW) --++ (-2em,.8em) node[font=\tiny,anchor=east] {mid west};
+  },
+  cnet symbol test picture anchors/.pic={
+    \node[cnet symbol,cnet symbol test outline] (I) {Label Text};
+
+    \draw[dash dot, very thin] (I.picture west) -- (I.picture east);
+    \draw[dash dot, very thin] (I.north) -- (I.south);
+    \draw[dash dot, very thin] (I.east) -- (I.west);
+
+    \node[cnet symbol test anchor point] (NE) at (I.picture north east) {};
+    \draw[-,very thin] (NE) --++ (2em,2em) node[font=\tiny,anchor=south west] {picture north east};
+
+    \node[cnet symbol test anchor point] (NW) at (I.picture north west) {};
+    \draw[-,very thin] (NW) --++ (-2em,2em) node[font=\tiny,anchor=south east] {picture north west};
+
+    \node[cnet symbol test anchor point] (N) at (I.picture north) {};
+    \draw[-,very thin] (N) --++ (0em,3em) node[font=\tiny,anchor=south] {picture north};
+
+    \node[cnet symbol test anchor point] (SE) at (I.picture south east) {};
+    \draw[-,very thin] (SE) --++ (2em,-2em) node[font=\tiny,anchor=north west] {picture south east};
+
+    \node[cnet symbol test anchor point] (SW) at (I.picture south west) {};
+    \draw[-,very thin] (SW) --++ (-2em,-2em) node[font=\tiny,anchor=north east] {picture south west};
+
+    \node[cnet symbol test anchor point] (S) at (I.picture south) {};
+    \draw[-,very thin] (S) --++ (0em,-3em) node[font=\tiny,anchor=north] {picture south};
+
+    \node[cnet symbol test anchor point] (E) at (I.picture east) {};
+    \draw[-,very thin] (E) --++ (3em,.5em) node[font=\tiny,anchor=west] {picture east};
+
+    \node[cnet symbol test anchor point] (W) at (I.picture west) {};
+    \draw[-,very thin] (W) --++ (-3em,.5em) node[font=\tiny,anchor=east] {picture west};
+
+    \node[cnet symbol test anchor point] (C) at (I.picture center) {};
+    \draw[-,very thin] (C) --++ (-3em,2em) node[font=\tiny,anchor=east] {picture center};
+  }
+}

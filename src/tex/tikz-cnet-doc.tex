@@ -1,0 +1,715 @@
+\documentclass[a4paper]{ltxdoc}
+\usepackage{calc}
+\usepackage{tikz}
+\usepackage[a4paper,left=2.25cm,right=2.25cm,top=2.5cm,bottom=2.5cm,nohead]{geometry}
+\usepackage[hidelinks]{hyperref}
+
+\input{pgfmanual-en-macros.tex}
+
+\usetikzlibrary{shapes.cnet.symbol}
+\usetikzlibrary{shapes.cnet.car}
+\usetikzlibrary{shapes.cnet.symbol.test}
+
+\title{\tikz{\node[cnet car]{}}\\The \textsf{tikz-cnet} package}
+\author{Paweł Tomulik}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+  This package provides \pgfname{} shapes that may be used to draw diagrams of
+  computer networks. Several reusable |symbol|s are provided to simplify this
+  task.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+
+\subsection{Usage}
+\label{sec:usage}
+
+The library may be included with |\usetikzlibrary{shapes.cnet}|:
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cnet}}]
+\begin{tikzpicture}
+  \node[cnet car] {A car};
+\end{tikzpicture}
+\end{codeexample}
+You can also limit inclusion to only necessary symbols with
+|\usetikzlibrary{shapes.cnet.<symbol>}|, for example:
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cnet.car}}]
+\begin{tikzpicture}
+  \node[cnet car] {A car};
+\end{tikzpicture}
+\end{codeexample}
+
+\section{Symbols}\label{sec:symbols}
+
+The |shapes.cnet| library defines
+\begin{itemize}
+  \item one generic |symbol|, named |cnet symbol|, which can be provided with
+    custom \pgfname\ drawing code, and
+  \item a~bunch of predefined specific |symbol|s with fixed drawings.
+\end{itemize}
+
+\subsection{Generic cnet symbol}
+\label{sec:cnet-symbol}
+
+The generic |cnet symbol| provides a basic node model, without any predefined
+drawing. The model consists of two regions:
+\begin{itemize}
+  \item |picture|, and
+  \item |text| region.
+\end{itemize}
+The |picture| encloses a~|drawing|, which is by default empty. The parameter
+|/pgf/cnet/drawing| may be used to provide drawing. The |/pgf/cnet/drawing|
+shall be a valid \pgfname{} code.
+
+The |text| region contains the node contents as provided within brackets |{}|
+of the |\node| command.
+
+\begin{codeexample}[]
+\begin{tikzpicture}
+  \def\mydrawing{
+    \pgfpathmoveto{\pgfpoint{-1.5cm}{-1.5cm}}
+    \pgfpathlineto{\pgfpoint{1.5cm}{1.5cm}}
+    \pgfusepath{stroke}
+    \pgfpathcircle{\pgfpoint{0cm}{0cm}}{4pt}
+    \pgfusepath{stroke,fill}
+    \pgftext[top,at={\pgfpoint{0cm}{-0.60cm}}]{drawing}
+  }
+  \node[
+    cnet symbol,
+    draw=green, dashed, very thick,
+    cnet/drawing size=3cm,
+    cnet/picture outline=blue,
+    cnet/picture outline dashed,
+    cnet/picture outline very thin,
+    cnet/drawing color=red,
+    cnet/drawing solid,
+    cnet/drawing={\mydrawing}
+  ] {text};
+\end{tikzpicture}
+\end{codeexample}
+
+\subsection{Common parameters}
+\label{sec:cnet-symbol-parameters}
+
+A~number of parameters can be used to setup the generic |cnet symbol|. Many of
+them (but not all) also alter predefined symbols described in further chapters.
+
+\begin{key}{/pgf/cnet/picture inner xsep=\meta{dimension} (initially .3333em)}
+\keyalias{tikz/cnet}
+  Stores the horizontal inner separation between the drawing and the border of
+  picture region.
+\end{key}
+
+\begin{key}{/pgf/cnet/picture inner ysep=\meta{dimension} (initially .3333em)}
+\keyalias{tikz/cnet}
+  Stores the vertical inner separation between the drawing and the border of
+  picture region.
+\end{key}
+
+\begin{key}{/pgf/cnet/picture inner sep=\meta{dimension}}
+\keyalias{tikz/cnet}
+  This style sets both |/pgf/cnet/picture inner xsep| and
+  |/pgf/cnet/picture inner ysep| to \meta{dimension}.
+\begin{codeexample}[]
+\begin{tikzpicture}
+  \tikzset{square/.style={
+    shape=cnet symbol,
+    cnet/drawing size=2cm,
+    cnet/picture outline=black,
+    cnet/picture outline dashed,
+    cnet/picture outline very thin,
+    cnet/drawing color=red,
+    cnet/drawing fill color=lightgray,
+    cnet/drawing={
+      % rectangle spans entire drawing region
+      \pgfpathrectangle{\pgfpoint{-1cm}{-1cm}}{\pgfpoint{2cm}{2cm}}
+      \pgfusepath{stroke,fill}
+    }
+  }}
+  \node[square, cnet/picture inner sep=.5cm] at (0cm,1.5cm) {};
+  \node[square, cnet/picture inner sep=.1cm] at (0cm,-1.5cm) {};
+\end{tikzpicture}
+\end{codeexample}
+\end{key}
+
+\begin{key}{/pgf/cnet/picture outer xsep=\meta{dimension} (initially .5\string\pgflinewidth)}
+\keyalias{tikz/cnet}
+  Stores the recommended horizontal separation between the border of picture
+  and the ,,outer anchors''.
+\end{key}
+
+\begin{key}{/pgf/cnet/picture outer ysep=\meta{dimension} (initially .5\string\pgflinewidth)}
+\keyalias{tikz/cnet}
+  Stores the recommended vertical separation between the border of picture
+  and the ,,outer anchors''.
+\end{key}
+
+\begin{key}{/pgf/cnet/picture outer sep}
+\keyalias{tikz/cnet}
+  Sets both, |/pgf/cnet/picture outer xsep|
+  and |/pgf/cnet/picture outer ysep| to \meta{dimension}.
+\end{key}
+
+\begin{key}{/pgf/cnet/picture minimum width=\meta{dimension} (initially 1pt)}
+\keyalias{tikz/cnet}
+  Stores the recommended minimum width of the picture region.
+\end{key}
+
+\begin{key}{/pgf/cnet/picture minimum height=\meta{dimension} (initially 1pt)}
+\keyalias{tikz/cnet}
+  Stores the recommended minimum height of the picture region.
+\end{key}
+
+\begin{key}{/pgf/cnet/picture minimum size=\meta{dimension}}
+\keyalias{tikz/cnet}
+  Sets both, |/pgf/cnet/picture minimum width|
+  and |/pgf/cnet/picture minimum height| to \meta{dimension}.
+\end{key}
+
+\begin{key}{/pgf/cnet/picture text sep=\meta{dimension} (initially .3333em)}
+\keyalias{tikz/cnet}
+  Stores the vertical separation between text and picture.
+\end{key}
+
+\begin{key}{/pgf/cnet/picture outline=\meta{color}}
+\keyalias{tikz/cnet}
+  Causes the picture border to be drawn. If the optional \meta{color} argument
+  is given, drawing is done using the given \meta{color}. Otherwise, color
+  provided with |/tikz/draw| or |\textbackslash{color}| will be used.
+\end{key}
+
+\begin{key}{/pgf/cnet/picture fill=\meta{color}}
+\keyalias{tikz/cnet}
+  Cauese the picture region to be filled with \meta{color}
+\end{key}
+
+\begin{key}{/pgf/cnet/picture outline line width=\meta{dimension}}
+\keyalias{tikz/cnet}
+  Stores the line width used to draw the picture outline.
+\end{key}
+
+\begin{key}{/pgf/cnet/picture outline dash=\meta{dash pattern}phase\meta{dash phase}}
+\keyalias{tikz/cnet}
+  Sets the dashing pattern and phase for picture outline at the same time.
+\end{key}
+
+\begin{key}{/pgf/cnet/picture outline dash pattern=\meta{dash pattern}}
+\keyalias{tikz/cnet}
+  Sets the dashing pattern for picture outline. The syntax is the same as in
+  |METAFONT|. For example following pattern of |2pt off 3pt on 4pt off 4pt|
+  means ``draw 2pt, then leave out 3pt, then draw 4pt once more, then leave out
+  4pt again, repeat''.
+\end{key}
+
+\begin{key}{/pgf/cnet/picture outline dash phase=\meta{dash phase}}
+\keyalias{tikz/cnet}
+  Shifts the start of the dash pattern for picture outline by \meta{dash phase}.
+\end{key}
+
+\begin{key}{/pgf/cnet/drawing=\meta{drawing code}}
+\keyalias{tikz/cnet}
+  Provides the drawing code for |cnet symbol|.
+\end{key}
+
+\begin{key}{/pgf/cnet/drawing width=\meta{dimension} (initially 3em)}
+\keyalias{tikz/cnet}
+  Stores the width of the drawing region.
+\end{key}
+
+\begin{key}{/pgf/cnet/drawing height=\meta{dimension} (initially 3em)}
+\keyalias{tikz/cnet}
+  Stores the height of the drawing region.
+\end{key}
+
+\begin{key}{/pgf/cnet/drawing height=\meta{dimension}}
+\keyalias{tikz/cnet}
+  Sets both |/pgf/cnet/drawing width| and |/pgf/cnet/drawing height| to
+  \meta{dimension}.
+\end{key}
+
+\begin{key}{/pgf/cnet/drawing color=\meta{color}}
+\keyalias{tikz/cnet}
+  Sets stroke color used by drawing.
+\end{key}
+
+\begin{key}{/pgf/cnet/drawing fill color=\meta{color}}
+\keyalias{tikz/cnet}
+  Sets fill color used by drawing.
+\end{key}
+
+\begin{key}{/pgf/cnet/drawing line width=\meta{dimension}}
+\keyalias{tikz/cnet}
+  Sets line width used by drawing.
+\end{key}
+
+\begin{key}{/pgf/cnet/drawing dash=\meta{dash pattern}phase\meta{dash phase}}
+\keyalias{tikz/cnet}
+  Sets dash pattern and phase to be used by drawing.
+\end{key}
+
+\begin{key}{/pgf/cnet/drawing dash pattern=\meta{dash pattern}}
+\keyalias{tikz/cnet}
+  Sets the dashing pattern for drawing. The syntax is the same as in
+  |METAFONT|. For example following pattern of |2pt off 3pt on 4pt off 4pt|
+  means ``draw 2pt, then leave out 3pt, then draw 4pt once more, then leave out
+  4pt again, repeat''.
+\end{key}
+
+\begin{key}{/pgf/cnet/drawing dash phase=\meta{dash phase}}
+\keyalias{tikz/cnet}
+  Shifts the start of the dash pattern for drawing by \meta{dash phase}.
+\end{key}
+
+\begin{key}{/pgf/cnet/anchor border=\meta{type}}
+\keyalias{tikz/cnet}
+  Decides what should be used as node's |anchor border|. Possible choices for
+  \meta{type} are:
+  \begin{itemize}
+    \item |picture border| the boundaries of symbol's picture are used,
+    \item |symbol border| the boundaries of whole symbol are used,
+    \item |text border| the boundaries of text label are used.
+  \end{itemize}
+
+\begin{codeexample}[]
+\begin{tikzpicture}
+  \tikzset{circ/.style={
+    shape=cnet symbol,
+    draw=green, dashed, very thin,
+    cnet/drawing size=1cm,
+    cnet/picture outline=black,
+    cnet/picture outline dashed,
+    cnet/picture outline very thin,
+    cnet/drawing solid,
+    cnet/drawing color=red,
+    cnet/drawing fill color=lightgray,
+    cnet/drawing={
+      \pgfpathcircle{\pgfpoint{0cm}{0cm}}{0.35cm}
+      \pgfusepath{stroke,fill}
+    }
+  }}
+  \node[circ, cnet/anchor border=picture border] (A) at (0cm,1cm) {A};
+  \node[circ, cnet/anchor border=symbol border] (B) at (-1cm,-1cm) {B};
+  \node[circ, cnet/anchor border=text border] (C) at (1cm,-1cm) {C};
+  \draw (A) -- (B) -- (C);
+\end{tikzpicture}
+\end{codeexample}
+\end{key}
+
+\begin{key}{/pgf/cnet/text placement=\meta{placement} (default below picture)}
+\keyalias{tikz/cnet}
+  Defines placement of text relative to picture region. The available choices
+  are:
+  \begin{itemize}
+    \item |above picture| -- the text will be placed above picture,
+    \item |below picture| -- the text will be placed below picture.
+  \end{itemize}
+
+\begin{codeexample}[]
+\begin{tikzpicture}
+  \tikzset{circ/.style={
+    shape=cnet symbol,
+    cnet/drawing size=2cm,
+    cnet/picture outline=black,
+    cnet/picture outline dashed,
+    cnet/picture outline very thin,
+    cnet/drawing color=red,
+    cnet/drawing fill color=lightgray,
+    cnet/drawing={
+      \pgfpathcircle{\pgfpoint{0cm}{0cm}}{0.75cm}
+      \pgfusepath{stroke,fill}
+    }
+  }}
+  \node[circ, cnet/text placement=above picture] at (0cm,1.5cm) {above picture};
+  \node[circ, cnet/text placement=below picture] at (0cm,-1.5cm) {below picture};
+\end{tikzpicture}
+\end{codeexample}
+\end{key}
+
+\subsection{Common predefined styles}
+\label{sec:cnet-symbol-predefined-styles}
+
+\begin{stylekey}{/tikz/cnet/picture outline ultra thin}
+  Sets |/tikz/cnet/picture outline line width| to |0.1pt|
+\begin{codeexample}[]
+\begin{tikzpicture}
+  \node[
+    cnet symbol,
+    cnet/picture outline,
+    cnet/picture outline ultra thin
+  ] {};
+\end{tikzpicture}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline very thin}
+  Sets |/tikz/cnet/picture outline line width| to |0.2pt|
+\begin{codeexample}[]
+\begin{tikzpicture}
+  \node[
+    cnet symbol,
+    cnet/picture outline,
+    cnet/picture outline very thin
+  ] {};
+\end{tikzpicture}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline thin}
+  Sets |/tikz/cnet/picture outline line width| to |0.4pt|
+\begin{codeexample}[]
+\begin{tikzpicture}
+  \node[
+    cnet symbol,
+    cnet/picture outline,
+    cnet/picture outline thin
+  ] {};
+\end{tikzpicture}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline semithick}
+  Sets |/tikz/cnet/picture outline line width| to |0.6pt|
+\begin{codeexample}[]
+\begin{tikzpicture}
+  \node[
+    cnet symbol,
+    cnet/picture outline,
+    cnet/picture outline semithick
+  ] {};
+\end{tikzpicture}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline thick}
+  Sets |/tikz/cnet/picture outline line width| to |0.8pt|
+\begin{codeexample}[]
+\begin{tikzpicture}
+  \node[
+    cnet symbol,
+    cnet/picture outline,
+    cnet/picture outline thick
+  ] {};
+\end{tikzpicture}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline very thick}
+ Sets |/tikz/cnet/picture outline line width| to |1.2pt|
+\begin{codeexample}[]
+\begin{tikzpicture}
+  \node[
+    cnet symbol,
+    cnet/picture outline,
+    cnet/picture outline very thick
+  ] {};
+\end{tikzpicture}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline ultra thick}
+  Sets |/tikz/cnet/picture outline line width| to |1.6pt|
+\begin{codeexample}[]
+\begin{tikzpicture}
+  \node[
+    cnet symbol,
+    cnet/picture outline,
+    cnet/picture outline ultra thick
+  ] {};
+\end{tikzpicture}
+\end{codeexample}
+\end{stylekey}
+
+
+\begin{stylekey}{/tikz/cnet/picture outline solid}
+  Sets |/tikz/cnet/picture outline dash pattern| to |{}| (empty, i.e. -- use
+  solid lines).
+\begin{codeexample}[]
+\begin{tikzpicture}
+  \tikzset{
+    circ/.style={
+      shape=cnet symbol, dashed,
+      cnet/picture outline,
+      cnet/drawing={
+        \pgfpathcircle{\pgfpoint{0em}{0em}}{1em}
+        \pgfusepath{stroke}
+      }
+    }
+  }
+  \node[circ] at (0em,3em) {without solid};
+  \node[circ, cnet/picture outline solid] at (0em,-3em) {with solid};
+\end{tikzpicture}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline dotted}
+  Sets |/tikz/cnet/picture outline dash pattern| to dotted pattern.
+\begin{codeexample}[]
+\begin{tikzpicture}
+  \tikzset{
+    circ/.style={
+      shape=cnet symbol, dashed,
+      cnet/picture outline,
+      cnet/drawing={
+        \pgfpathcircle{\pgfpoint{0em}{0em}}{1em}
+        \pgfusepath{stroke}
+      }
+    }
+  }
+  \node[circ] at (0em,3em) {without dotted};
+  \node[circ, cnet/picture outline dotted] at (0em,-3em) {with dotted};
+\end{tikzpicture}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline densely dotted}
+  Sets |/tikz/cnet/picture outline dash pattern| to densely dotted pattern.
+\begin{codeexample}[]
+\begin{tikzpicture}
+  \tikzset{
+    circ/.style={
+      shape=cnet symbol, dashed,
+      cnet/picture outline,
+      cnet/drawing={
+        \pgfpathcircle{\pgfpoint{0em}{0em}}{1em}
+        \pgfusepath{stroke}
+      }
+    }
+  }
+  \node[circ] at (0em,3em) {without dotted};
+  \node[circ, cnet/picture outline densely dotted] at (0em,-3em) {with dotted};
+\end{tikzpicture}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline loosely dotted}
+  Sets |/tikz/cnet/picture outline dash pattern| to |on \pgflinewidth off 4pt|
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline dashed}
+  Sets |/tikz/cnet/picture outline dash pattern| to |on 3pt off 3pt|
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline densely dashed}
+  Sets |/tikz/cnet/picture outline dash pattern| to |on 3pt off 2pt|
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline loosely dashed}
+  Sets |/tikz/cnet/picture outline dash pattern| to |on 3pt off 6pt|
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline dashdotted}
+  Sets |/tikz/cnet/picture outline dash pattern| to |on 3pt off 2pt on \the\pgflinewidth off 2pt|
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline dash dot}
+  Sets |/tikz/cnet/picture outline dash pattern| to |on 3pt off 2pt on \the\pgflinewidth off 2pt|
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline densely dashdotted}
+  Sets |/tikz/cnet/picture outline dash pattern| to |on 3pt off 1pt on \the\pgflinewidth off 1pt|
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline densely dash dot}
+  Sets |/tikz/cnet/picture outline dash pattern| to |on 3pt off 1pt on \the\pgflinewidth off 1pt|
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline loosely dashdotted}
+  Sets |/tikz/cnet/picture outline dash pattern| to |on 3pt off 4pt on \the\pgflinewidth off 4pt|%
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline loosely dash dot}
+  Sets |/tikz/cnet/picture outline dash pattern| to |on 3pt off 4pt on \the\pgflinewidth off 4pt|
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline dashdotdotted}
+  Sets |/tikz/cnet/picture outline dash pattern| to |on 3pt off 2pt on \the\pgflinewidth off 2pt on \the\pgflinewidth off 2pt|
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline densely dashdotdotted}
+  Sets |/tikz/cnet/picture outline dash pattern| to |on 3pt off 1pt on \the\pgflinewidth off 1pt on \the\pgflinewidth off 1pt|
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline loosely dashdotdotted}
+  Sets |/tikz/cnet/picture outline dash pattern| to |on 3pt off 4pt on \the\pgflinewidth off 4pt on \the\pgflinewidth off 4pt|
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline dash dot dot}
+  Sets |/tikz/cnet/picture outline dash pattern| to |on 3pt off 2pt on \the\pgflinewidth off 2pt on \the\pgflinewidth off 2pt|
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline densely dash dot dot}
+  Sets |/tikz/cnet/picture outline dash pattern| to |on 3pt off 1pt on \the\pgflinewidth off 1pt on \the\pgflinewidth off 1pt|
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet/picture outline loosely dash dot dot}
+  Sets |/tikz/cnet/picture outline dash pattern| to |on 3pt off 4pt on \the\pgflinewidth off 4pt on \the\pgflinewidth off 4pt|
+\end{stylekey}
+
+
+%%\begin{stylekey}{/tikz/cnet/drawing ultra thin}
+%%% {cnet/drawing line width=0.1pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing very thin}
+%%% {cnet/drawing line width=0.2pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing thin}
+%%% {cnet/drawing line width=0.4pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing semithick}
+%%% {cnet/drawing line width=0.6pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing thick}
+%%% {cnet/drawing line width=0.8pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing very thick}
+%%% {cnet/drawing line width=1.2pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing ultra thick}
+%%% {cnet/drawing line width=1.6pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing solid}
+%%% {cnet/drawing dash pattern=}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing dotted}
+%%% {cnet/drawing dash pattern=on \pgflinewidth off 2pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing densely dotted}
+%%% {cnet/drawing dash pattern=on \pgflinewidth off 1pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing loosely dotted}
+%%% {cnet/drawing dash pattern=on \pgflinewidth off 4pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing dashed}
+%%% {cnet/drawing dash pattern=on 3pt off 3pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing densely dashed}
+%%% {cnet/drawing dash pattern=on 3pt off 2pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing loosely dashed}
+%%% {cnet/drawing dash pattern=on 3pt off 6pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing dashdotted}
+%%% {cnet/drawing dash pattern=on 3pt off 2pt on \the\pgflinewidth off 2pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing dash dot}
+%%% {cnet/drawing dash pattern=on 3pt off 2pt on \the\pgflinewidth off 2pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing densely dashdotted}
+%%% {cnet/drawing dash pattern=on 3pt off 1pt on \the\pgflinewidth off 1pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing densely dash dot}
+%%% {cnet/drawing dash pattern=on 3pt off 1pt on \the\pgflinewidth off 1pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing loosely dashdotted}
+%%% {cnet/drawing dash pattern=on 3pt off 4pt on \the\pgflinewidth off 4pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing loosely dash dot}
+%%% {cnet/drawing dash pattern=on 3pt off 4pt on \the\pgflinewidth off 4pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing dashdotdotted}
+%%% {cnet/drawing dash pattern=on 3pt off 2pt on \the\pgflinewidth off 2pt on \the\pgflinewidth off 2pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing densely dashdotdotted}
+%%% {cnet/drawing dash pattern=on 3pt off 1pt on \the\pgflinewidth off 1pt on \the\pgflinewidth off 1pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing loosely dashdotdotted}
+%%% {cnet/drawing dash pattern=on 3pt off 4pt on \the\pgflinewidth off 4pt on \the\pgflinewidth off 4pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing dash dot dot}
+%%% {cnet/drawing dash pattern=on 3pt off 2pt on \the\pgflinewidth off 2pt on \the\pgflinewidth off 2pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing densely dash dot dot}
+%%% {cnet/drawing dash pattern=on 3pt off 1pt on \the\pgflinewidth off 1pt on \the\pgflinewidth off 1pt}}%
+%%  TODO
+%%\end{stylekey}
+%%
+%%\begin{stylekey}{/tikz/cnet/drawing loosely dash dot dot}
+%%% {cnet/drawing dash pattern=on 3pt off 4pt on \the\pgflinewidth off 4pt on \the\pgflinewidth off 4pt}}%
+%%  TODO
+%%\end{stylekey}
+
+
+\subsection{Cnet symbol geometry}
+\label{sec:cnet-symbol-geometry}
+
+\autoref{fig:cnet-symbol-anchors} depicts standard anchors provided by
+|cnet symbol|. The outer anchors, such as |north east|, are distanced from
+symbol's boundary by |outer xsep| and |outer ysep|.
+\begin{figure}[htbp]
+  \begin{center}
+  \begin{tikzpicture}
+    \pic[] (A) at (0,0) {cnet symbol test anchors};
+  \end{tikzpicture}
+  \end{center}
+  \caption{Anchors of cnet symbol (without picture anchors)}
+  \label{fig:cnet-symbol-anchors}
+\end{figure}
+
+\autoref{fig:cnet-symbol-picture-anchors} depicts anchors related to
+|cnet symbol|'s picture region. The outer anchors, such as |picture north east|,
+are distanced from picture's boundary by |cnet picture outer xsep|
+and~|cnet picture outer ysep|.
+\begin{figure}[htbp]
+  \begin{center}
+  \begin{tikzpicture}
+    \pic[] (A) at (0,0) {cnet symbol test picture anchors};
+  \end{tikzpicture}
+  \end{center}
+  \caption{Picture anchors of cnet symbol}
+  \label{fig:cnet-symbol-picture-anchors}
+\end{figure}
+
+\end{document}

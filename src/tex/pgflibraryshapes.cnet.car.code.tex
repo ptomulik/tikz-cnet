@@ -1,0 +1,290 @@
+% Copyright 2022 by Paweł Tomulik
+
+\ProvidesFileRCS{pgflibraryshapes.cnet.car.code.tex}
+
+\usepgflibrary{shapes.cnet.symbol}
+
+\pgfkeys{/pgf/.cd,
+  cnet car wave color/.code={\pgf@lib@sh@cnet@set@car@wave@fillcolor{#1}},
+}
+
+% ---------------------------------------------------------------------------
+%  car@wave@options
+% ---------------------------------------------------------------------------
+\let\pgf@lib@sh@cnet@car@wave@options\pgfutil@empty
+\let\pgf@lib@sh@cnet@car@wave@fillcolor\pgfutil@empty
+\let\pgf@lib@sh@cnet@car@wave@linewidth\pgfutil@empty%
+% ---------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@set@car@wave@fillcolor#1{
+  \pgf@lib@sh@cnet@addoption{\pgf@lib@sh@cnet@car@wave@options}{\pgfsetfillcolor{#1}}%
+  \def\pgf@lib@sh@cnet@car@fillcolor{#1}%
+}%
+% ---------------------------------------------------------------------------
+
+% ---------------------------------------------------------------------------
+\pgfdeclareshape{cnet car}{
+  \inheritanchorborder[from={cnet symbol}]
+
+  \pgf@lib@sh@cnet@declare@symbolsavedanchors%
+    {1.00000}{0.313752}%
+    {\pgfmathsetlength\pgf@x{\pgfkeysvalueof{/pgf/cnet symbol size}}}%
+
+  \pgf@lib@sh@cnet@inheritsymbolanchors[from={cnet symbol}]
+
+  \inheritbackgroundpath[from={cnet symbol}]
+
+  \pgf@lib@sh@cnet@declare@symbol@beforebackgroundpath{%
+      \pgfpathmoveto{\pgfpointxy{0.210960}{-0.032588}} % M 763.45,218.66
+      \pgf@process{\pgfpointxy{0.076311}{-0.076311}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.233357}{-0.036030}} % a 48.11,48.11 0 0,1 14.12,2.17
+      \pgfpathcurveto{\pgfpointxy{0.231184}{-0.035839}}{\pgfpointxy{0.229027}{-0.035665}}{\pgfpointxy{0.226822}{-0.035665}} % c -1.37,-0.12 -2.73,-0.23 -4.12,-0.23
+      \pgfpathcurveto{\pgfpointxy{0.180094}{-0.035665}}{\pgfpointxy{0.142216}{-0.076429}}{\pgfpointxy{0.142216}{-0.126711}} % c -29.46,0 -53.34,25.7 -53.34,57.4
+      \pgfpathcurveto{\pgfpointxy{0.142216}{-0.176992}}{\pgfpointxy{0.180094}{-0.217741}}{\pgfpointxy{0.226822}{-0.217741}} % c 0,31.7 23.88,57.39 53.34,57.39
+      \pgfpathcurveto{\pgfpointxy{0.229027}{-0.217741}}{\pgfpointxy{0.231184}{-0.217567}}{\pgfpointxy{0.233357}{-0.217392}} % c 1.39,0 2.75,-0.11 4.12,-0.22
+      \pgf@process{\pgfpointxy{0.076311}{-0.076311}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.210960}{-0.220834}} % a 48.11,48.11 0 0,1 -14.12,2.17
+      \pgfpathcurveto{\pgfpointxy{0.164232}{-0.220834}}{\pgfpointxy{0.126354}{-0.178690}}{\pgfpointxy{0.126354}{-0.126711}} % c -29.46,0 -53.34,-26.57 -53.34,-59.34
+      \pgfpathcurveto{\pgfpointxy{0.126354}{-0.074732}}{\pgfpointxy{0.164248}{-0.032588}}{\pgfpointxy{0.210960}{-0.032588}} % S 734,218.66 763.45,218.66
+      \pgfpathclose % Z
+      \pgfusepath{fill}
+      \pgfpathmoveto{\pgfpointxy{-0.700547}{-0.045245}} % M 188.79,226.64
+      \pgf@process{\pgfpointxy{0.045364}{-0.045364}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{-0.676215}{-0.052589}} % a 28.6,28.6 0 0,1 15.34,4.63
+      \pgf@process{\pgfpointxy{0.036910}{-0.036910}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{-0.689492}{-0.049988}} % a 23.27,23.27 0 0,0 -8.37,-1.64
+      \pgfpathcurveto{\pgfpointxy{-0.718899}{-0.049988}}{\pgfpointxy{-0.742755}{-0.085708}}{\pgfpointxy{-0.742755}{-0.129788}} % c -18.54,0 -33.58,22.52 -33.58,50.31
+      \pgfpathcurveto{\pgfpointxy{-0.742755}{-0.173868}}{\pgfpointxy{-0.718963}{-0.209572}}{\pgfpointxy{-0.689492}{-0.209572}} % c 0,27.79 15,50.3 33.58,50.3
+      \pgf@process{\pgfpointxy{0.039971}{-0.039971}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{-0.664272}{-0.200055}} % a 25.2,25.2 0 0,0 15.9,-6
+      \pgfpathcurveto{\pgfpointxy{-0.674375}{-0.210936}}{\pgfpointxy{-0.686906}{-0.217503}}{\pgfpointxy{-0.700547}{-0.217503}} % c -6.37,6.86 -14.27,11 -22.87,11
+      \pgfpathcurveto{\pgfpointxy{-0.733857}{-0.217503}}{\pgfpointxy{-0.760822}{-0.178943}}{\pgfpointxy{-0.760822}{-0.131390}} % c -21,0 -38,-24.31 -38,-54.29
+      \pgfpathcurveto{\pgfpointxy{-0.760822}{-0.083837}}{\pgfpointxy{-0.733873}{-0.045245}}{\pgfpointxy{-0.700547}{-0.045245}} % S 167.78,226.64 188.79,226.64
+      \pgfpathclose % Z
+      \pgfusepath{fill}
+      \pgfpathmoveto{\pgfpointxy{-0.931985}{-0.103442}} % M 42.88,263.33
+      \pgfpathcurveto{\pgfpointxy{-0.931985}{-0.103442}}{\pgfpointxy{-0.924371}{-0.149282}}{\pgfpointxy{-0.834801}{-0.144809}} % s 4.8,28.9 61.27,26.08
+      \pgfpathlineto{\pgfpointxy{-0.832453}{-0.145396}} % l 1.48,0.37
+      \pgfpathcurveto{\pgfpointxy{-0.826378}{-0.232207}}{\pgfpointxy{-0.763280}{-0.300539}}{\pgfpointxy{-0.686145}{-0.300539}} % c 3.83,54.73 43.61,97.81 92.24,97.81
+      \pgfpathlineto{\pgfpointxy{-0.663478}{-0.300539}} % h 14.29,0
+      \pgfpathcurveto{\pgfpointxy{-0.609358}{-0.300539}}{\pgfpointxy{-0.562217}{-0.266912}}{\pgfpointxy{-0.536744}{-0.216948}} % c 34.12,0 63.84,-21.2 79.9,-52.7
+      \pgfpathlineto{\pgfpointxy{-0.279784}{-0.216948}} % h 162,0
+      \pgfpathcurveto{\pgfpointxy{-0.252677}{-0.263819}}{\pgfpointxy{-0.205805}{-0.294845}}{\pgfpointxy{-0.152399}{-0.294845}} % C 471.15,364.44 500.7,384 534.37,384
+      \pgfpathcurveto{\pgfpointxy{-0.098993}{-0.294845}}{\pgfpointxy{-0.052106}{-0.263772}}{\pgfpointxy{-0.025046}{-0.216900}} % c 33.67,0 63.23,-19.59 80.29,-49.14
+      \pgfpathlineto{\pgfpointxy{0.057816}{-0.216900}} % H 666.9,334.86
+      \pgfpathcurveto{\pgfpointxy{0.083290}{-0.272004}}{\pgfpointxy{0.134063}{-0.309596}}{\pgfpointxy{0.192640}{-0.309596}} % c 16.06,34.74 48.07,58.44 85,58.44
+      \pgfpathlineto{\pgfpointxy{0.247030}{-0.309596}} % h 34.29,0
+      \pgfpathcurveto{\pgfpointxy{0.334507}{-0.309596}}{\pgfpointxy{0.377191}{-0.275557}}{\pgfpointxy{0.404663}{-0.222547}} % c 55.15,0 82.06,-21.46 99.38,-54.88
+      \pgfpathlineto{\pgfpointxy{0.594893}{-0.222547}} % h 119.93,0
+      \pgfpathcurveto{\pgfpointxy{0.627504}{-0.268546}}{\pgfpointxy{0.683861}{-0.299064}}{\pgfpointxy{0.748069}{-0.299064}} % c 20.56,29 56.09,48.24 96.57,48.24
+      \pgfpathcurveto{\pgfpointxy{0.826077}{-0.299064}}{\pgfpointxy{0.892569}{-0.254128}}{\pgfpointxy{0.918820}{-0.190919}} % c 49.18,0 91.1,-28.33 107.65,-68.18
+      \pgfpathlineto{\pgfpointxy{0.922547}{-0.188841}} % l 2.35,-1.31
+      \pgfpathcurveto{\pgfpointxy{0.922547}{-0.188841}}{\pgfpointxy{0.944024}{-0.183020}}{\pgfpointxy{0.949829}{-0.159846}} % s 13.54,-3.67 17.2,-18.28
+      \pgfpathcurveto{\pgfpointxy{0.949829}{-0.159846}}{\pgfpointxy{0.937679}{-0.171901}}{\pgfpointxy{0.923547}{-0.171901}} % c 0,0 -7.66,7.6 -16.57,7.6
+      \pgfpathlineto{\pgfpointxy{0.436276}{-0.171901}} % H 905.5,306.49
+      \pgf@process{\pgfpointxy{0.061861}{-0.061861}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.425315}{-0.170632}} % a 39,39 0 0,1 -6.91,-0.8
+      \pgfpathcurveto{\pgfpointxy{0.397732}{-0.163700}}{\pgfpointxy{0.383440}{-0.135625}}{\pgfpointxy{0.383948}{-0.131580}} % c -17.39,-4.37 -26.4,-22.07 -26.08,-24.62
+      \pgfpathcurveto{\pgfpointxy{0.383948}{-0.131580}}{\pgfpointxy{0.399810}{-0.148219}}{\pgfpointxy{0.428361}{-0.148219}} % c 0,0 10,10.49 28,10.49
+      \pgfpathlineto{\pgfpointxy{0.911238}{-0.148219}} % h 304.43,0
+      \pgfpathcurveto{\pgfpointxy{0.911238}{-0.148219}}{\pgfpointxy{0.953954}{-0.139971}}{\pgfpointxy{0.966484}{-0.079411}} % s 26.93,-5.2 34.83,-43.38
+      \pgfpathcurveto{\pgfpointxy{0.962757}{-0.084424}}{\pgfpointxy{0.957824}{-0.087342}}{\pgfpointxy{0.952954}{-0.086533}} % c -2.35,3.16 -5.46,5 -8.53,4.49
+      \pgfpathcurveto{\pgfpointxy{0.944754}{-0.085217}}{\pgfpointxy{0.939979}{-0.074113}}{\pgfpointxy{0.942279}{-0.061726}} % c -5.17,-0.83 -8.18,-7.83 -6.73,-15.64
+      \pgfpathcurveto{\pgfpointxy{0.944579}{-0.049338}}{\pgfpointxy{0.953097}{-0.040376}}{\pgfpointxy{0.961313}{-0.041708}} % s 6.82,-13.46 12,-12.62
+      \pgf@process{\pgfpointxy{0.012118}{-0.012118}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.969847}{-0.048592}} % a 7.64,7.64 0 0,1 5.38,4.34
+      \pgf@process{\pgfpointxy{0.243588}{-0.243588}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.968911}{-0.020977}} % a 153.57,153.57 0 0,0 -0.59,-17.41
+      \pgfpathlineto{\pgfpointxy{0.968546}{-0.018947}} % l -0.23,-1.28
+      \pgfpathcurveto{\pgfpointxy{0.980332}{-0.016171}}{\pgfpointxy{0.990309}{-0.004798}}{\pgfpointxy{0.996019}{0.011048}} % c 7.43,-1.75 13.72,-8.92 17.32,-18.91
+      \pgfpathcurveto{\pgfpointxy{0.988310}{0.000183}}{\pgfpointxy{0.976985}{-0.006559}}{\pgfpointxy{0.964644}{-0.005972}} % c -4.86,6.85 -12,11.1 -19.78,10.73
+      \pgfpathcurveto{\pgfpointxy{0.943342}{-0.004957}}{\pgfpointxy{0.927306}{0.017377}}{\pgfpointxy{0.928749}{0.043913}} % c -13.43,-0.64 -23.54,-14.72 -22.63,-31.45
+      \pgfpathcurveto{\pgfpointxy{0.930193}{0.070450}}{\pgfpointxy{0.948608}{0.091276}}{\pgfpointxy{0.969990}{0.090261}} % s 12.52,-29.86 26,-29.22
+      \pgf@process{\pgfpointxy{0.032786}{-0.032786}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.990753}{0.081331}} % a 20.67,20.67 0 0,1 13.09,5.63
+      \pgfpathcurveto{\pgfpointxy{0.985312}{0.090594}}{\pgfpointxy{0.978063}{0.097193}}{\pgfpointxy{0.969990}{0.099620}} % c -3.43,-5.84 -8,-10 -13.09,-11.53
+      \pgfpathcurveto{\pgfpointxy{0.969990}{0.099620}}{\pgfpointxy{0.840812}{0.162813}}{\pgfpointxy{0.664954}{0.143858}} % c 0,0 -81.44,-39.84 -192.31,-27.89
+      \pgfpathcurveto{\pgfpointxy{0.664954}{0.143858}}{\pgfpointxy{0.858133}{0.087152}}{\pgfpointxy{0.909430}{-0.005131}} % c 0,0 121.79,35.75 154.13,93.93
+      \pgfpathcurveto{\pgfpointxy{0.888810}{0.013491}}{\pgfpointxy{0.862114}{0.023690}}{\pgfpointxy{0.834880}{0.028496}} % c -13,-11.74 -29.83,-18.17 -47,-21.2
+      \pgfpathcurveto{\pgfpointxy{0.807645}{0.033302}}{\pgfpointxy{0.778761}{0.031367}}{\pgfpointxy{0.752018}{0.025720}} % s -35.38,-1.81 -52.24,1.75
+      \pgfpathcurveto{\pgfpointxy{0.725466}{0.019724}}{\pgfpointxy{0.700531}{0.007511}}{\pgfpointxy{0.683813}{-0.011618}} % c -16.74,3.78 -32.46,11.48 -43,23.54
+      \pgf@process{\pgfpointxy{0.104306}{-0.104306}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.664240}{-0.043643}} % a 65.76,65.76 0 0,0 -12.34,20.19
+      \pgf@process{\pgfpointxy{0.108446}{-0.108446}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.658704}{-0.061503}} % a 68.37,68.37 0 0,0 -3.49,11.26
+      \pgfpathcurveto{\pgfpointxy{0.657118}{-0.069180}}{\pgfpointxy{0.663241}{-0.076429}}{\pgfpointxy{0.671758}{-0.076429}} % c -1,4.84 2.86,9.41 8.23,9.41
+      \pgfpathlineto{\pgfpointxy{0.865271}{-0.076429}} % h 122,0
+      \pgfpathcurveto{\pgfpointxy{0.865271}{-0.076429}}{\pgfpointxy{0.887937}{-0.078523}}{\pgfpointxy{0.910604}{-0.053668}} % s 14.29,1.32 28.58,-14.35
+      \pgfpathcurveto{\pgfpointxy{0.910604}{-0.053668}}{\pgfpointxy{0.904164}{-0.090499}}{\pgfpointxy{0.864906}{-0.090499}} % c 0,0 -4.06,23.22 -28.81,23.22
+      \pgfpathlineto{\pgfpointxy{0.660132}{-0.090499}} % h -129.1,0
+      \pgfpathcurveto{\pgfpointxy{0.646269}{-0.090499}}{\pgfpointxy{0.635483}{-0.079031}}{\pgfpointxy{0.637465}{-0.066310}} % c -8.74,0 -15.54,-7.23 -14.29,-15.25
+      \pgfpathcurveto{\pgfpointxy{0.638020}{-0.063137}}{\pgfpointxy{0.638655}{-0.060076}}{\pgfpointxy{0.639369}{-0.057538}} % c 0.35,-2 0.75,-3.93 1.2,-5.53
+      \pgfpathcurveto{\pgfpointxy{0.640368}{-0.054096}}{\pgfpointxy{0.641098}{-0.050638}}{\pgfpointxy{0.642367}{-0.047180}} % c 0.63,-2.17 1.09,-4.35 1.89,-6.53
+      \pgf@process{\pgfpointxy{0.083369}{-0.083369}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.646269}{-0.037156}} % a 52.56,52.56 0 0,1 2.46,-6.32
+      \pgfpathcurveto{\pgfpointxy{0.652058}{-0.024006}}{\pgfpointxy{0.659592}{-0.011190}}{\pgfpointxy{0.670188}{-0.000753}} % c 3.65,-8.29 8.4,-16.37 15.08,-22.95
+      \pgfpathcurveto{\pgfpointxy{0.690808}{0.020914}}{\pgfpointxy{0.719867}{0.033714}}{\pgfpointxy{0.748973}{0.038901}} % c 13,-13.66 31.32,-21.73 49.67,-25
+      \pgfpathcurveto{\pgfpointxy{0.778333}{0.043549}}{\pgfpointxy{0.808074}{0.043882}}{\pgfpointxy{0.836894}{0.037553}} % c 18.51,-2.93 37.26,-3.14 55.43,0.85
+      \pgf@process{\pgfpointxy{0.149639}{-0.149639}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.877786}{0.022722}} % a 94.34,94.34 0 0,1 25.78,9.35
+      \pgfpathcurveto{\pgfpointxy{0.852677}{0.041518}}{\pgfpointxy{0.811167}{0.067135}}{\pgfpointxy{0.748148}{0.090737}} % c -15.83,-11.85 -42,-28 -81.73,-42.88
+      \pgfpathcurveto{\pgfpointxy{0.559029}{0.161591}}{\pgfpointxy{0.210754}{0.230447}}{\pgfpointxy{-0.197716}{0.130661}} % C 982.89,96.24 763.32,52.83 505.8,115.74
+      \pgfpathlineto{\pgfpointxy{-0.204378}{0.134753}} % l -4.2,-2.58
+      \pgfpathlineto{\pgfpointxy{-0.242953}{0.193441}} % l -24.32,-37
+      \pgfpathlineto{\pgfpointxy{-0.265080}{0.227148}} % L 463.33,54.91
+      \pgfpathlineto{\pgfpointxy{-0.276184}{0.243993}} % l -7,-10.62
+      \pgfpathlineto{\pgfpointxy{-0.281688}{0.252383}} % L 452.86,39
+      \pgfpathcurveto{\pgfpointxy{-0.282830}{0.254081}}{\pgfpointxy{-0.282861}{0.254350}}{\pgfpointxy{-0.283464}{0.255286}} % c -0.72,-1.07 -0.74,-1.24 -1.12,-1.83
+      \pgf@process{\pgfpointxy{0.017305}{-0.017305}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{-0.284416}{0.257856}} % a 10.91,10.91 0 0,1 -0.6,-1.62
+      \pgfpathcurveto{\pgfpointxy{-0.286557}{0.264867}}{\pgfpointxy{-0.281846}{0.273480}}{\pgfpointxy{-0.273900}{0.275732}} % c -1.35,-4.42 1.62,-9.85 6.63,-11.27
+      \pgfpathlineto{\pgfpointxy{-0.272313}{0.276160}} % l 1,-0.27
+      \pgfpathlineto{\pgfpointxy{-0.269807}{0.276684}} % l 1.58,-0.33
+      \pgfpathlineto{\pgfpointxy{-0.264684}{0.277715}} % l 3.23,-0.65
+      \pgfpathlineto{\pgfpointxy{-0.254501}{0.279761}} % L 470,21.74
+      \pgfpathcurveto{\pgfpointxy{-0.247617}{0.281014}}{\pgfpointxy{-0.240765}{0.282362}}{\pgfpointxy{-0.233881}{0.283472}} % c 4.34,-0.79 8.66,-1.64 13,-2.34
+      \pgfpathquadraticcurveto{\pgfpointxy{-0.192529}{0.290531}}{\pgfpointxy{-0.150591}{0.294576}} % q 26.07,-4.45 52.51,-7
+      \pgfpathcurveto{\pgfpointxy{-0.094758}{0.299969}}{\pgfpointxy{-0.038338}{0.301348}}{\pgfpointxy{0.017638}{0.296717}} % C 570.71,9 606.28,8.13 641.57,11.05
+      \pgf@process{\pgfpointxy{0.693838}{-0.693838}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.100944}{0.285027}} % a 437.43,437.43 0 0,1 52.52,7.37
+      \pgfpathlineto{\pgfpointxy{0.121421}{0.280411}} % L 707,21.33
+      \pgf@process{\pgfpointxy{0.060401}{-0.060401}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.131160}{0.277715}} % a 38.08,38.08 0 0,1 6.14,1.7
+      \pgfpathcurveto{\pgfpointxy{0.134333}{0.276588}}{\pgfpointxy{0.137505}{0.275288}}{\pgfpointxy{0.140582}{0.273876}} % c 2,0.71 4,1.53 5.94,2.42
+      \pgfpathcurveto{\pgfpointxy{0.152764}{0.267991}}{\pgfpointxy{0.164248}{0.260314}}{\pgfpointxy{0.171957}{0.249211}} % C 726.76,29.16 734,34 738.86,41
+      \pgfpathcurveto{\pgfpointxy{0.167198}{0.261900}}{\pgfpointxy{0.155984}{0.272068}}{\pgfpointxy{0.143564}{0.278888}} % c -3,-8 -10.07,-14.41 -17.9,-18.71
+      \pgf@process{\pgfpointxy{0.075137}{-0.075137}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.123467}{0.287041}} % a 47.37,47.37 0 0,0 -12.67,-5.14
+      \pgfpathlineto{\pgfpointxy{0.102847}{0.292498}} % l -13,-3.44
+      \pgf@process{\pgfpointxy{0.700706}{-0.700706}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.018780}{0.307582}} % a 441.76,441.76 0 0,0 -53,-9.51
+      \pgfpathcurveto{\pgfpointxy{-0.037735}{0.314387}}{\pgfpointxy{-0.095107}{0.315132}}{\pgfpointxy{-0.152129}{0.311912}} % C 606.66,-0.09 570.49,-0.56 534.54,1.47
+      \pgfpathquadraticcurveto{\pgfpointxy{-0.194956}{0.309359}}{\pgfpointxy{-0.237418}{0.303775}} % q -27,1.61 -53.77,5.13
+      \pgfpathcurveto{\pgfpointxy{-0.244508}{0.302919}}{\pgfpointxy{-0.251566}{0.301808}}{\pgfpointxy{-0.258641}{0.300793}} % c -4.47,0.54 -8.92,1.24 -13.38,1.88
+      \pgfpathlineto{\pgfpointxy{-0.269236}{0.299207}} % l -6.68,1
+      \pgfpathlineto{\pgfpointxy{-0.274534}{0.298351}} % l -3.34,0.54
+      \pgfpathlineto{\pgfpointxy{-0.277231}{0.297907}} % l -1.7,0.28
+      \pgfpathlineto{\pgfpointxy{-0.280863}{0.297066}} % l -2.29,0.53
+      \pgf@process{\pgfpointxy{0.040368}{-0.040368}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{-0.304338}{0.280300}} % a 25.45,25.45 0 0,0 -14.8,10.57
+      \pgf@process{\pgfpointxy{0.036181}{-0.036181}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{-0.309446}{0.252970}} % a 22.81,22.81 0 0,0 -3.22,17.23
+      \pgf@process{\pgfpointxy{0.037497}{-0.037497}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{-0.307288}{0.246039}} % A 23.64,23.64 0 0,0 436.72,43
+      \pgf@process{\pgfpointxy{0.060671}{-0.060671}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{-0.304116}{0.240202}} % a 38.25,38.25 0 0,0 2,3.68
+      \pgfpathlineto{\pgfpointxy{-0.298913}{0.231605}} % L 442,52.1
+      \pgfpathlineto{\pgfpointxy{-0.288429}{0.214426}} % l 6.61,10.83
+      \pgfpathlineto{\pgfpointxy{-0.267444}{0.180086}} % l 13.23,21.65
+      \pgfpathlineto{\pgfpointxy{-0.251471}{0.153946}} % l 10.07,16.48
+      \pgfpathcurveto{\pgfpointxy{-0.311650}{0.154136}}{\pgfpointxy{-0.528765}{0.152931}}{\pgfpointxy{-0.643540}{0.126981}} % c -37.94,-0.12 -174.82,0.64 -247.18,17
+      \pgfpathcurveto{\pgfpointxy{-0.602919}{0.116274}}{\pgfpointxy{-0.578507}{0.093941}}{\pgfpointxy{-0.568118}{0.082394}} % c 25.61,6.75 41,20.83 47.55,28.11
+      \pgfpathcurveto{\pgfpointxy{-0.542168}{0.078206}}{\pgfpointxy{-0.503640}{0.075446}}{\pgfpointxy{-0.446951}{0.077493}} % c 16.36,2.64 40.65,4.38 76.39,3.09
+      \pgf@process{\pgfpointxy{0.462574}{-0.462574}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{-0.533127}{0.099604}} % a 291.63,291.63 0 0,1 -54.33,-13.94
+      \pgfpathcurveto{\pgfpointxy{-0.443477}{0.156103}}{\pgfpointxy{-0.339424}{0.100270}}{\pgfpointxy{-0.318344}{0.087771}} % c 56.52,-35.62 122.12,-0.42 135.41,7.46
+      \pgfpathcurveto{\pgfpointxy{-0.263542}{0.094116}}{\pgfpointxy{-0.199032}{0.103458}}{\pgfpointxy{-0.122928}{0.117036}} % c 34.55,-4 75.22,-9.89 123.2,-18.45
+      \pgfpathcurveto{\pgfpointxy{0.320073}{0.195995}}{\pgfpointxy{0.512332}{0.099762}}{\pgfpointxy{0.512332}{0.099762}} % c 279.29,-49.78 400.5,10.89 400.5,10.89
+      \pgfpathcurveto{\pgfpointxy{0.512332}{0.099762}}{\pgfpointxy{0.420335}{0.127314}}{\pgfpointxy{0.235673}{0.123349}} % s -58,-17.37 -174.42,-14.87
+      \pgfpathcurveto{\pgfpointxy{0.309461}{0.106741}}{\pgfpointxy{0.359870}{0.039282}}{\pgfpointxy{0.373670}{-0.012078}} % c 46.52,10.47 78.3,53 87,85.38
+      \pgf@process{\pgfpointxy{0.147514}{-0.147514}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.362344}{-0.002387}} % a 93,93 0 0,0 -7.14,-6.11
+      \pgfpathcurveto{\pgfpointxy{0.336696}{0.034095}}{\pgfpointxy{0.276311}{0.101856}}{\pgfpointxy{0.187025}{0.094861}} % c -16.17,-23 -54.24,-65.72 -110.53,-61.31
+      \pgfpathcurveto{\pgfpointxy{0.097105}{0.087866}}{\pgfpointxy{0.059117}{0.019026}}{\pgfpointxy{0.059117}{0.019026}} % c -56.69,4.41 -80.64,47.81 -80.64,47.81
+      \pgfpathcurveto{\pgfpointxy{0.059117}{0.019026}}{\pgfpointxy{0.067999}{0.094353}}{\pgfpointxy{0.150860}{0.119558}} % s 5.6,-47.49 57.84,-63.38
+      \pgfpathcurveto{\pgfpointxy{0.073884}{0.117972}}{\pgfpointxy{-0.012134}{0.104394}}{\pgfpointxy{-0.111571}{0.086439}} % c -48.53,1 -102.76,9.56 -165.45,20.88
+      \pgfpathcurveto{\pgfpointxy{-0.402014}{0.033920}}{\pgfpointxy{-0.555349}{0.043691}}{\pgfpointxy{-0.595527}{0.047990}} % C 377,176.73 280.33,170.57 255,167.86
+      \pgf@process{\pgfpointxy{0.093806}{-0.093806}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{-0.573321}{-0.020929}} % a 59.14,59.14 0 0,1 14,43.45
+      \pgfpathcurveto{\pgfpointxy{-0.573321}{-0.020929}}{\pgfpointxy{-0.608581}{0.078666}}{\pgfpointxy{-0.698327}{0.081791}} % s -22.23,-62.79 -78.81,-64.76
+      \pgfpathcurveto{\pgfpointxy{-0.698327}{0.081791}}{\pgfpointxy{-0.753620}{0.082552}}{\pgfpointxy{-0.791784}{0.045722}} % c 0,0 -34.86,-0.48 -58.92,22.74
+      \pgfpathcurveto{\pgfpointxy{-0.791784}{0.045722}}{\pgfpointxy{-0.760980}{0.120129}}{\pgfpointxy{-0.640162}{0.105250}} % c 0,0 19.42,-46.91 95.59,-37.53
+      \pgfpathcurveto{\pgfpointxy{-0.652201}{0.111310}}{\pgfpointxy{-0.681561}{0.115925}}{\pgfpointxy{-0.681561}{0.115925}} % c -7.59,-3.82 -26.1,-6.73 -26.1,-6.73
+      \pgfpathcurveto{\pgfpointxy{-0.681561}{0.115925}}{\pgfpointxy{-0.853200}{0.146586}}{\pgfpointxy{-0.936553}{0.037458}} % S 92.55,105.7 40,174.5
+      \pgfpathcurveto{\pgfpointxy{-0.958046}{0.009319}}{\pgfpointxy{-0.958046}{-0.023800}}{\pgfpointxy{-0.950163}{-0.041581}} % c -13.55,17.74 -13.55,38.62 -8.58,49.83
+      \pgfpathcurveto{\pgfpointxy{-0.936109}{-0.073098}}{\pgfpointxy{-0.895773}{-0.078412}}{\pgfpointxy{-0.895773}{-0.078412}} % c 8.86,19.87 34.29,23.22 34.29,23.22
+      \pgfpathcurveto{\pgfpointxy{-0.895773}{-0.078412}}{\pgfpointxy{-0.939377}{-0.091641}}{\pgfpointxy{-0.962662}{-0.067309}} % s -27.49,8.34 -42.17,-7
+      \pgfpathcurveto{\pgfpointxy{-0.962614}{-0.067372}}{\pgfpointxy{-0.969054}{-0.094496}}{\pgfpointxy{-0.931985}{-0.103442}} % C 23.57,240.59 19.51,257.69 42.88,263.33
+      \pgfpathclose % Z
+      \pgfpathmoveto{\pgfpointxy{0.512650}{-0.061456}} % m 910.77,-26.47
+      \pgfpathcurveto{\pgfpointxy{0.515235}{-0.047593}}{\pgfpointxy{0.525815}{-0.037663}}{\pgfpointxy{0.536299}{-0.039424}} % c 1.63,-8.74 8.3,-15 14.91,-13.89
+      \pgfpathcurveto{\pgfpointxy{0.546784}{-0.041185}}{\pgfpointxy{0.553192}{-0.053699}}{\pgfpointxy{0.550575}{-0.067563}} % s 10.65,9 9,17.74
+      \pgfpathcurveto{\pgfpointxy{0.547958}{-0.081426}}{\pgfpointxy{0.537410}{-0.091276}}{\pgfpointxy{0.526925}{-0.089594}} % s -8.3,14.95 -14.91,13.89
+      \pgfpathcurveto{\pgfpointxy{0.516441}{-0.087913}}{\pgfpointxy{0.510033}{-0.075303}}{\pgfpointxy{0.512650}{-0.061456}} % S 952,245.59 953.65,236.86
+      \pgfpathclose % Z
+      \pgfpathmoveto{\pgfpointxy{0.479530}{0.031319}} % m -20.88,-58.49
+      \pgf@process{\pgfpointxy{0.055881}{-0.055881}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.493489}{0.068309}} % a 35.23,35.23 0 0,1 8.8,-23.32
+      \pgf@process{\pgfpointxy{0.056690}{-0.056690}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.487414}{0.042930}} % a 35.74,35.74 0 0,0 -3.83,16
+      \pgf@process{\pgfpointxy{0.055119}{-0.055119}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.507812}{-0.000135}} % a 34.75,34.75 0 0,0 12.86,27.15
+      \pgf@process{\pgfpointxy{0.066730}{-0.066730}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.500912}{0.035840}} % a 42.07,42.07 0 0,1 -4.35,-22.68
+      \pgfpathcurveto{\pgfpointxy{0.503085}{0.066358}}{\pgfpointxy{0.523118}{0.089944}}{\pgfpointxy{0.545325}{0.088516}} % c 1.37,-19.24 14,-34.11 28,-33.21
+      \pgfpathcurveto{\pgfpointxy{0.567531}{0.087089}}{\pgfpointxy{0.583932}{0.061298}}{\pgfpointxy{0.581807}{0.030796}} % s 24.34,17.16 23,36.39
+      \pgfpathcurveto{\pgfpointxy{0.579729}{0.002641}}{\pgfpointxy{0.558141}{-0.023134}}{\pgfpointxy{0.532635}{-0.023483}} % c -1.31,17.75 -14.92,34 -31,34.22
+      \pgfpathcurveto{\pgfpointxy{0.503275}{-0.023800}}{\pgfpointxy{0.479530}{0.001055}}{\pgfpointxy{0.479530}{0.031319}} % C 947.74,213.12 932.77,197.45 932.77,178.37
+      \pgfpathclose % Z
+      \pgfpathmoveto{\pgfpointxy{0.683115}{-0.191363}} % m 128.35,140.39
+      \pgf@process{\pgfpointxy{0.087461}{-0.087461}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.764153}{-0.189555}} % a 55.14,55.14 0 0,0 51.09,-1.14
+      \pgfpathlineto{\pgfpointxy{0.807661}{-0.189555}} % h 27.43,0
+      \pgf@process{\pgfpointxy{0.091760}{-0.091760}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.683115}{-0.191363}} % a 57.85,57.85 0 0,1 -78.52,1.14
+      \pgfpathclose % Z
+      \pgfpathmoveto{\pgfpointxy{0.107859}{-0.126711}} % M 698.45,278
+      \pgfpathcurveto{\pgfpointxy{0.107859}{-0.065612}}{\pgfpointxy{0.153271}{-0.016155}}{\pgfpointxy{0.209295}{-0.016155}} % c 0,-38.52 28.63,-69.7 63.95,-69.7
+      \pgfpathcurveto{\pgfpointxy{0.248727}{-0.016155}}{\pgfpointxy{0.282814}{-0.040756}}{\pgfpointxy{0.299580}{-0.076572}} % c 24.86,0 46.35,15.51 56.92,38.09
+      \pgf@process{\pgfpointxy{0.140043}{-0.140043}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.314442}{-0.139686}} % a 88.29,88.29 0 0,1 9.37,39.79
+      \pgfpathcurveto{\pgfpointxy{0.314442}{-0.207891}}{\pgfpointxy{0.267396}{-0.263312}}{\pgfpointxy{0.209390}{-0.263312}} % c 0,43 -29.66,77.94 -66.23,77.94
+      \pgf@process{\pgfpointxy{0.092981}{-0.092981}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.189991}{-0.261123}} % a 58.62,58.62 0 0,1 -12.23,-1.38
+      \pgfpathcurveto{\pgfpointxy{0.190435}{-0.261123}}{\pgfpointxy{0.190800}{-0.261123}}{\pgfpointxy{0.191260}{-0.261123}} % c 0.28,0 0.51,0 0.8,0
+      \pgfpathcurveto{\pgfpointxy{0.226695}{-0.261123}}{\pgfpointxy{0.257974}{-0.240392}}{\pgfpointxy{0.277008}{-0.208779}} % c 22.34,0 42.06,-13.07 54.06,-33
+      \pgfpathcurveto{\pgfpointxy{0.259069}{-0.226386}}{\pgfpointxy{0.235308}{-0.237330}}{\pgfpointxy{0.209295}{-0.237330}} % c -11.31,11.1 -26.29,18 -42.69,18
+      \pgfpathcurveto{\pgfpointxy{0.153271}{-0.237346}}{\pgfpointxy{0.107859}{-0.187794}}{\pgfpointxy{0.107859}{-0.126711}} % C 727.08,347.75 698.45,316.51 698.45,278
+      \pgfpathclose % Z
+      \pgfpathmoveto{\pgfpointxy{0.050472}{-0.129582}} % m -36.18,1.81
+      \pgfpathcurveto{\pgfpointxy{0.050472}{-0.030050}}{\pgfpointxy{0.120739}{0.050591}}{\pgfpointxy{0.207392}{0.050591}} % c 0,-62.75 44.3,-113.59 98.93,-113.59
+      \pgfpathcurveto{\pgfpointxy{0.278008}{0.050591}}{\pgfpointxy{0.337743}{-0.003006}}{\pgfpointxy{0.357411}{-0.076651}} % c 44.52,0 82.18,33.79 94.58,80.22
+      \pgfpathcurveto{\pgfpointxy{0.333397}{-0.011428}}{\pgfpointxy{0.276517}{0.034380}}{\pgfpointxy{0.210025}{0.034380}} % c -15.14,-41.12 -51,-70 -92.92,-70
+      \pgfpathcurveto{\pgfpointxy{0.124260}{0.034380}}{\pgfpointxy{0.054580}{-0.041962}}{\pgfpointxy{0.050757}{-0.137703}} % c -54.07,0 -98,48.13 -100.41,108.49
+      \pgfpathcurveto{\pgfpointxy{0.050662}{-0.134959}}{\pgfpointxy{0.050472}{-0.132262}}{\pgfpointxy{0.050472}{-0.129566}} % C 662.39,283.2 662.27,281.5 662.27,279.8
+      \pgfpathclose % Z
+      \pgfpathmoveto{\pgfpointxy{-0.436815}{-0.180783}} % M 355.06,312.09
+      \pgfpathlineto{\pgfpointxy{0.016449}{-0.155849}} % l 285.76,-15.72
+      \pgf@process{\pgfpointxy{0.079435}{-0.079435}}
+      \pgfpatharcto{\the\pgf@x}{\the\pgf@y}{0.000000}{0}{0}{\pgfpointxy{0.018701}{-0.180783}} % a 50.08,50.08 0 0,0 1.42,15.72
+      \pgfpathclose % Z
+      \pgfpathmoveto{\pgfpointxy{-0.799175}{-0.130407}} % M 126.61,280.33
+      \pgfpathcurveto{\pgfpointxy{-0.799175}{-0.064248}}{\pgfpointxy{-0.759933}{-0.010572}}{\pgfpointxy{-0.711428}{-0.010572}} % c 0,-41.71 24.74,-75.55 55.32,-75.55
+      \pgfpathcurveto{\pgfpointxy{-0.662923}{-0.010572}}{\pgfpointxy{-0.623586}{-0.064248}}{\pgfpointxy{-0.623586}{-0.130407}} % s 55.38,33.84 55.38,75.55
+      \pgfpathcurveto{\pgfpointxy{-0.623586}{-0.196566}}{\pgfpointxy{-0.662939}{-0.250226}}{\pgfpointxy{-0.711428}{-0.250226}} % c 0,41.71 -24.81,75.54 -55.38,75.54
+      \pgfpathcurveto{\pgfpointxy{-0.759918}{-0.250226}}{\pgfpointxy{-0.799175}{-0.196502}}{\pgfpointxy{-0.799175}{-0.130407}} % S 126.61,322 126.61,280.33
+      \pgfpathclose % Z
+      \pgfpathmoveto{\pgfpointxy{-0.814323}{-0.047402}} % M 117.06,228
+      \pgfpathcurveto{\pgfpointxy{-0.792656}{0.002911}}{\pgfpointxy{-0.751320}{0.036950}}{\pgfpointxy{-0.703815}{0.036950}} % c 13.66,-31.72 39.72,-53.18 69.67,-53.18
+      \pgfpathcurveto{\pgfpointxy{-0.633928}{0.036950}}{\pgfpointxy{-0.563724}{-0.037600}}{\pgfpointxy{-0.589214}{-0.153041}} % c 44.06,0 88.32,47 72.25,119.78
+      \pgfpathcurveto{\pgfpointxy{-0.581474}{-0.052621}}{\pgfpointxy{-0.635372}{0.020359}}{\pgfpointxy{-0.706448}{0.022548}} % c 4.88,-63.31 -29.1,-109.32 -73.91,-110.7
+      \pgfpathcurveto{\pgfpointxy{-0.749956}{0.023817}}{\pgfpointxy{-0.789389}{-0.003910}}{\pgfpointxy{-0.814323}{-0.047402}} % C 157.64,183.1 132.78,200.58 117.06,228
+      \pgfpathclose % Z
+      \pgfusepath{fill}
+      \pgfpathmoveto{\pgfpointxy{-1.000000}{-0.307534}} % M 0,392
+      \pgfpathcurveto{\pgfpointxy{-0.916663}{-0.299683}}{\pgfpointxy{-0.833341}{-0.295067}}{\pgfpointxy{-0.750004}{-0.290213}} % c 52.54,-4.95 105.07,-7.86 157.61,-10.92
+      \pgfpathcurveto{\pgfpointxy{-0.666667}{-0.285772}}{\pgfpointxy{-0.583329}{-0.282488}}{\pgfpointxy{-0.500008}{-0.279792}} % c 52.54,-2.8 105.08,-4.87 157.61,-6.57
+      \pgfpathquadraticcurveto{\pgfpointxy{-0.249996}{-0.272036}}{\pgfpointxy{0.000000}{-0.272274}} % q 157.62,-4.89 315.23,-4.74
+      \pgfpathquadraticcurveto{\pgfpointxy{0.249996}{-0.272511}}{\pgfpointxy{0.499992}{-0.279887}} % t 315.22,4.8
+      \pgfpathcurveto{\pgfpointxy{0.583329}{-0.282599}}{\pgfpointxy{0.666667}{-0.285867}}{\pgfpointxy{0.750004}{-0.290308}} % c 52.54,1.71 105.08,3.77 157.62,6.57
+      \pgfpathcurveto{\pgfpointxy{0.833325}{-0.295067}}{\pgfpointxy{0.916663}{-0.299746}}{\pgfpointxy{1.000000}{-0.307534}} % c 52.53,3 105.07,5.95 157.61,10.86
+      \pgfpathlineto{\pgfpointxy{1.000000}{-0.311690}} % v 2.62
+      \pgfpathlineto{\pgfpointxy{0.750004}{-0.312689}} % l -157.61,0.63
+      \pgfpathlineto{\pgfpointxy{0.499992}{-0.313070}} % l -157.62,0.24
+      \pgfpathlineto{\pgfpointxy{-0.000000}{-0.313752}} % l -315.22,0.43
+      \pgfpathlineto{\pgfpointxy{-0.500008}{-0.313070}} % l -315.23,-0.43
+      \pgfpathlineto{\pgfpointxy{-0.750004}{-0.312705}} % l -157.61,-0.23
+      \pgfpathlineto{\pgfpointxy{-1.000000}{-0.311722}} % L 0,394.64
+      \pgfpathclose % Z
+      \pgfusepath{fill}
+  }%
+}

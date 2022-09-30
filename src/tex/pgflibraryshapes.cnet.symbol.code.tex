@@ -1,0 +1,1026 @@
+% Copyright 2022 by Paweł Tomulik
+
+\ProvidesFileRCS{pgflibraryshapes.cnet.symbol.code.tex}
+
+
+% ---------------------------------------------------------------------------
+% Generic keys applicable go any cnet symbol
+% ---------------------------------------------------------------------------
+\pgfkeys{/pgf/cnet/.cd,%
+  % picture geometry
+  picture inner xsep/.initial          =.3333em,%
+  picture inner ysep/.initial          =.3333em,%
+  picture inner sep/.style             ={/pgf/cnet/picture inner xsep={#1},/pgf/cnet/picture inner ysep={#1}},%
+  picture outer xsep/.initial          =.5\pgflinewidth,%
+  picture outer ysep/.initial          =.5\pgflinewidth,%
+  picture outer sep/.style             ={/pgf/cnet/picture outer xsep={#1},/pgf/cnet/picture outer ysep={#1}},%
+  picture minimum width/.initial       =1pt,%
+  picture minimum height/.initial      =1pt,%
+  picture minimum size/.style          ={/pgf/cnet/picture minimum width={#1},/pgf/cnet/picture minimum height={#1}},%
+  picture text sep/.initial            =.3333em,%
+  % picture styling
+  picture outline/.code                ={\pgf@lib@sh@cnet@set@picture@outline{#1}},%
+  picture fill/.code                   ={\pgf@lib@sh@cnet@set@picture@outline@fill{#1}},%
+  picture outline line width/.code     ={\pgf@lib@sh@cnet@set@picture@outline@linewidth{#1}},%
+  picture outline dash/.code           ={\pgf@lib@sh@cnet@set@picture@outline@dash{#1}},%
+  picture outline dash pattern/.code   ={\pgf@lib@sh@cnet@set@picture@outline@dashpattern{#1}},%
+  picture outline dash phase/.code     ={\pgf@lib@sh@cnet@set@picture@outline@dashphase{#1}},%
+  % drawing (picture content)
+  drawing/.initial                     =\pgf@lib@sh@cnet@drawing@initial,%
+  drawing/.store in                    =\pgf@lib@sh@cnet@drawing,%
+  % drawing geometry
+  drawing width/.initial               =3em,%
+  drawing height/.initial              =3em,%
+  drawing size/.style                  ={/pgf/cnet/drawing width={#1},/pgf/cnet/drawing height={#1}},
+  % drawing default styling
+  drawing color/.code                  ={\pgf@lib@sh@cnet@set@drawing@strokecolor{#1}},%
+  drawing fill color/.code             ={\pgf@lib@sh@cnet@set@drawing@fillcolor{#1}},%
+  drawing line width/.code             ={\pgf@lib@sh@cnet@set@drawing@linewidth{#1}},%
+  drawing dash/.code                   ={\pgf@lib@sh@cnet@set@drawing@dash{#1}},%
+  drawing dash pattern/.code           ={\pgf@lib@sh@cnet@set@drawing@dashpattern{#1}},%
+  drawing dash phase/.code             ={\pgf@lib@sh@cnet@set@drawing@dashphase{#1}},%
+  % anchorborder settings
+  anchor border/.is choice,%
+  anchor border/picture border/.is if  =pgf@lib@sh@cnet@anchorborder@pictureborder,%
+  anchor border/picture border/.initial=true,%
+  anchor border/symbol border/.is if   =pgf@lib@sh@cnet@anchorborder@symbolborder,%
+  anchor border/symbol border/.initial =false,%
+  anchor border/text border/.is if     =pgf@lib@sh@cnet@anchorborder@textborder,%
+  anchor border/text border/.initial   =false,%
+  % text placement
+  text placement/.is choice,%
+  text placement/above picture/.is if  =pgf@lib@sh@cnet@text@placement@abovepicture,%
+  text placement/above picture/.initial=false,%
+  text placement/below picture/.is if  =pgf@lib@sh@cnet@text@placement@belowpicture,%
+  text placement/below picture/.initial=true,%
+}%
+
+\pgfkeys{/tikz/cnet/.search also={/pgf}}
+
+\newif\ifpgf@lib@sh@cnet@text@placement@abovepicture%
+\newif\ifpgf@lib@sh@cnet@text@placement@belowpicture%
+\newif\ifpgf@lib@sh@cnet@anchorborder@symbolborder%
+\newif\ifpgf@lib@sh@cnet@anchorborder@pictureborder%
+\newif\ifpgf@lib@sh@cnet@anchorborder@textborder%
+
+\def\pgf@lib@sh@cnet@nonetext{none}%
+
+%
+% picture
+%
+
+% ----------------------------------------------------------------------------
+%  append
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@append#1#2{%
+  \expandafter\def\expandafter#1\expandafter{#1#2}}%
+
+% ----------------------------------------------------------------------------
+%  addoption
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@addoption#1#2{\pgf@lib@sh@cnet@append{#1}{#2}}%
+
+% ----------------------------------------------------------------------------
+%  addmode
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@addmode#1#2{\pgf@lib@sh@cnet@append{#1}{#2}}%
+
+% ----------------------------------------------------------------------------
+% picture@outline@options
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@picture@outline@addoption#1{\pgf@lib@sh@cnet@addoption{\pgf@lib@sh@cnet@picture@outline@options}{#1}}%
+\let\pgf@lib@sh@cnet@picture@outline@options\pgfutil@empty%
+% ----------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------
+% set@dashphase{\options}{\dashpattern}{\dashphase}{phase}
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@set@dashphase#1#2#3#4{%
+  \def#3{#4}%
+  \edef\pgf@lib@sh@cnet@temp{{#2}{\noexpand{#3}}}%
+  \def\pgf@lib@sh@cnet@temp@addoption{\pgf@lib@sh@cnet@addoption{#1}}%
+}%
+
+% ----------------------------------------------------------------------------
+% set@dashpattern{\options}{\dashpattern}{\dashphase}{<pattern>}
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@set@dashpattern#1#2#3#4{% syntax: on 2pt off 3pt on 4pt ...
+  \def\pgf@lib@sh@cnet@temp{#4}%
+  \def\pgf@lib@sh@cnet@temp@addoption{\pgf@lib@sh@cnet@addoption{#1}}%
+  \ifx\pgf@lib@sh@cnet@temp\pgfutil@empty%
+    \def#2{}%
+    \pgf@lib@sh@cnet@temp@addoption{\pgfsetdash{}{0pt}}%
+  \else%
+    \def\pgf@lib@sh@cnet@temp@dashpattern{}%
+    \expandafter\pgf@lib@sh@cnet@temp@scandashon\pgfutil@gobble#4o\@nil%
+    \edef\pgf@lib@sh@cnet@temp{{\pgf@lib@sh@cnet@temp@dashpattern}{\noexpand#3}}%
+    \expandafter\pgf@lib@sh@cnet@temp@addoption\expandafter{\expandafter\pgfsetdash\pgf@lib@sh@cnet@temp}%
+    \edef#2{\pgf@lib@sh@cnet@temp@dashpattern}%
+  \fi}%
+% ----------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------
+% set@dash{\options}{\dashpattern}{\dashphase}{<dash>}
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@set@dash#1#2#3#4{%
+  \def\pgf@lib@sh@cnet@temp@addoption{\pgf@lib@sh@cnet@addoption{#1}}%
+  \pgf@lib@sh@cnet@parse@full@temp@dash#4\pgf@stop%
+  \edef#2{\pgf@lib@sh@cnet@temp@dashpattern}%
+  \edef#3{\pgf@lib@sh@cnet@temp@dashphase}%
+}%
+
+% ----------------------------------------------------------------------------
+%  parse@full@temp@dash{<dash>}
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@parse@full@temp@dash#1phase#2\pgf@stop{%
+  \def\pgf@lib@sh@cnet@temp@dashphase{#2}%
+  \def\pgf@lib@sh@cnet@temp{#1}%
+  \ifx\pgf@lib@sh@cnet@temp\pgfutil@empty%
+    \def\pgf@lib@sh@cnet@temp@dashpattern{}%
+    \pgf@lib@sh@cnet@temp@addoption{\pgfsetdash{}{0pt}}%
+  \else%
+    \def\pgf@lib@sh@cnet@temp@dashpattern{}%
+    \expandafter\pgf@lib@sh@cnet@temp@scandashon\pgfutil@gobble#1o\@nil%
+    \edef\pgf@lib@sh@cnet@temp{{\pgf@lib@sh@cnet@temp@dashpattern}{\noexpand\pgf@lib@sh@cnet@temp@dashphase}}%
+    \expandafter\pgf@lib@sh@cnet@temp@addoption\expandafter{\expandafter\pgfsetdash\pgf@lib@sh@cnet@temp}%
+  \fi%
+}%
+% ----------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------
+% temp@scandashon
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@temp@scandashon n#1o{%
+  \expandafter\def\expandafter\pgf@lib@sh@cnet@temp@dashpattern\expandafter{\pgf@lib@sh@cnet@temp@dashpattern{#1}}%
+  \pgfutil@ifnextchar\@nil{\pgfutil@gobble}{\pgf@lib@sh@cnet@temp@scandashoff}}%
+% ----------------------------------------------------------------------------
+% temp@scandashoff
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@temp@scandashoff ff#1o{%
+  \expandafter\def\expandafter\pgf@lib@sh@cnet@temp@dashpattern\expandafter{\pgf@lib@sh@cnet@temp@dashpattern{#1}}%
+  \pgfutil@ifnextchar\@nil{\pgfutil@gobble}{\pgf@lib@sh@cnet@temp@scandashon}}%
+% ----------------------------------------------------------------------------
+\let\pgf@lib@sh@cnet@temp@dashpattern\pgfutil@empty%
+\let\pgf@lib@sh@cnet@temp@dashphase\pgfutil@empty%
+% ----------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------
+% picture modes
+% ----------------------------------------------------------------------------
+%%\newif\ifpgf@lib@sh@cnet@picture@mode@double
+\newif\ifpgf@lib@sh@cnet@picture@mode@fill%
+\newif\ifpgf@lib@sh@cnet@picture@mode@outline%
+
+% ----------------------------------------------------------------------------
+%  picture@addmode
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@picture@addmode#1{\pgf@lib@sh@cnet@addmode{\pgf@lib@sh@cnet@picture@mode}{#1}}%
+\let\pgf@lib@sh@cnet@picture@mode\pgfutil@empty%
+% ----------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------
+% draw@picture@outline
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@draw@picture@outline{%
+  \begin{pgfscope}%
+    \pgf@lib@sh@cnet@picture@outline@options%
+    \def\outerseppoint{%
+      \pgfpoint{\pgfkeysvalueof{/pgf/cnet/picture outer xsep}}%
+               {\pgfkeysvalueof{/pgf/cnet/picture outer ysep}}%
+    }%
+
+    \pgfpathrectanglecorners%
+      {\pgfpointadd{\picturesouthwest}{\outerseppoint}}%
+      {\pgfpointadd{\picturenortheast}{\pgfpointscale{-1}{\outerseppoint}}}%
+
+    \edef\pgf@lib@sh@cnet@temp{\noexpand\pgfusepath{%
+      \ifpgf@lib@sh@cnet@picture@mode@fill fill,\fi%
+      \ifpgf@lib@sh@cnet@picture@mode@outline stroke \fi%
+    }}%
+    \pgf@lib@sh@cnet@temp%
+  \end{pgfscope}%
+}%
+% ----------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------
+% set@picture@outline@strokecolor
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@set@picture@outline@strokecolor#1{%
+  \pgf@lib@sh@cnet@picture@outline@addoption{\pgfsetstrokecolor{#1}}%
+  \def\pgf@lib@sh@cnet@picture@outline@strokecolor{#1}%
+}%
+\let\pgf@lib@sh@cnet@picture@outline@strokecolor\pgfutil@empty%
+% ----------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------
+% set@picture@outline@fillcolor
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@set@picture@outline@fillcolor#1{%
+  \pgf@lib@sh@cnet@picture@outline@addoption{\pgfsetfillcolor{#1}}%
+  \def\pgf@lib@sh@cnet@picture@outline@fillcolor{#1}%
+}%
+\let\pgf@lib@sh@cnet@picture@outline@fillcolor\pgfutil@empty%
+% ----------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------
+% set@picture@outline@linewidth
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@set@picture@outline@linewidth#1{%
+  \pgf@lib@sh@cnet@picture@outline@addoption{\pgfsetlinewidth{#1}}%
+  \def\pgf@lib@sh@cnet@picture@linewidth{#1}%
+}%
+\let\pgf@lib@sh@cnet@picture@outline@linewidth\pgfutil@empty%
+% ----------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------
+% set@picture@outline@dashpattern
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@set@picture@outline@dashpattern#1{% syntax: on 2pt off 3pt on 4pt ...
+  \pgf@lib@sh@cnet@set@dashpattern%
+    {\pgf@lib@sh@cnet@picture@outline@options}%
+    {\pgf@lib@sh@cnet@picture@outline@dashpattern}%
+    {\pgf@lib@sh@cnet@picture@outline@dashphase}%
+    {#1}%
+}%
+\let\pgf@lib@sh@cnet@picture@outline@dashpattern\pgfutil@empty%
+% ----------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------
+% set@picture@outline@dashphase
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@set@picture@outline@dashphase#1{%
+  \pgf@lib@sh@cnet@set@dashphase%
+    {\pgf@lib@sh@cnet@picture@outline@options}%
+    {\pgf@lib@sh@cnet@picture@outline@dashpattern}%
+    {\pgf@lib@sh@cnet@picture@outline@dashphase}%
+    {#1}%
+}%
+\def\pgf@lib@sh@cnet@picture@outline@dashphase{0pt}%
+% ----------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------
+% set@picture@outline@dash
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@set@picture@outline@dash#1{%
+  \pgf@lib@sh@cnet@set@dash%
+    {\pgf@lib@sh@cnet@picture@outline@options}%
+    {\pgf@lib@sh@cnet@picture@outline@dashpattern}%
+    {\pgf@lib@sh@cnet@picture@outline@dashphase}%
+    {#1}%
+}%
+
+% ----------------------------------------------------------------------------
+% set@picture@outline
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@set@picture@outline#1{%
+  \edef\pgf@lib@sh@cnet@temp{#1}%
+  \ifx\pgf@lib@sh@cnet@temp\pgf@lib@sh@cnet@nonetext%
+    \pgf@lib@sh@cnet@picture@addmode{\pgf@lib@sh@cnet@picture@mode@outlinefalse}%
+  \else%
+    \ifx\pgf@lib@sh@cnet@temp\pgfutil@empty%
+    \else%
+      \pgf@lib@sh@cnet@set@picture@outline@strokecolor{#1}%
+    \fi%
+    \pgf@lib@sh@cnet@picture@addmode{\pgf@lib@sh@cnet@picture@mode@outlinetrue}%
+  \fi%
+}%
+% ----------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------
+% set@picture@outline@fill
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@set@picture@outline@fill#1{%
+  \edef\pgf@lib@sh@cnet@temp{#1}%
+  \ifx\pgf@lib@sh@cnet@temp\pgf@lib@sh@cnet@nonetext%
+    \pgf@lib@sh@cnet@picture@addmode{\pgf@lib@sh@cnet@picture@mode@fillfalse}%
+  \else%
+    \ifx\pgf@lib@sh@cnet@temp\pgfutil@empty%
+    \else%
+      \pgf@lib@sh@cnet@set@picture@outline@fillcolor{#1}%
+    \fi%
+    \pgf@lib@sh@cnet@picture@addmode{\pgf@lib@sh@cnet@picture@mode@filltrue}%
+  \fi%
+}%
+
+% ----------------------------------------------------------------------------
+%  drawing code
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@drawing{\pgf@lib@sh@cnet@drawing@initial}%
+\let\pgf@lib@sh@cnet@drawing@initial\pgfutil@empty%
+
+% ----------------------------------------------------------------------------
+%  drawing@addoption{<option>}
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@drawing@addoption#1{\pgf@lib@sh@cnet@addoption{\pgf@lib@sh@cnet@drawing@options}{#1}}%
+\let\pgf@lib@sh@cnet@drawing@options\pgfutil@empty%
+% ----------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------
+% set@drawing@strokecolor{<color>}
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@set@drawing@strokecolor#1{%
+  \pgf@lib@sh@cnet@drawing@addoption{\pgfsetstrokecolor{#1}}%
+  \def\pgf@lib@sh@cnet@drawing@strokecolor{#1}%
+}%
+\let\pgf@lib@sh@cnet@drawing@strokecolor\pgfutil@empty%
+% ----------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------
+% set@drawing@fillcolor{<color>}
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@set@drawing@fillcolor#1{%
+  \pgf@lib@sh@cnet@drawing@addoption{\pgfsetfillcolor{#1}}%
+  \def\pgf@lib@sh@cnet@drawing@fillcolor{#1}%
+}%
+\let\pgf@lib@sh@cnet@drawing@fillcolor\pgfutil@empty%
+% ----------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------
+%  set@drawing@linewidth{<linewidth>}
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@set@drawing@linewidth#1{%
+  \pgf@lib@sh@cnet@drawing@addoption{\pgfsetlinewidth{#1}}%
+  \def\pgf@lib@sh@cnet@drawing@linewidth{#1}%
+}%
+\let\pgf@lib@sh@cnet@drawing@linewidth\pgfutil@empty%
+% ----------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------
+% set@drawing@dashpattern{<pattern>}
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@set@drawing@dashpattern#1{% syntax: on 2pt off 3pt on 4pt ...
+  \pgf@lib@sh@cnet@set@dashpattern%
+    {\pgf@lib@sh@cnet@drawing@options}%
+    {\pgf@lib@sh@cnet@drawing@dashpattern}%
+    {\pgf@lib@sh@cnet@drawing@dashphase}%
+    {#1}%
+}%
+\let\pgf@lib@sh@cnet@drawing@dashpattern\pgfutil@empty%
+% ----------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------
+% set@drawing@dashphase{<phase>}
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@set@drawing@dashphase#1{%
+  \pgf@lib@sh@cnet@set@dashphase%
+    {\pgf@lib@sh@cnet@drawing@options}%
+    {\pgf@lib@sh@cnet@drawing@dashpattern}%
+    {\pgf@lib@sh@cnet@drawing@dashphase}%
+    {#1}%
+}%
+\def\pgf@lib@sh@cnet@drawing@dashphase{0pt}%
+% ----------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------
+% set@drawing@dash{<dash>}
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@set@drawing@dash#1{%
+  \pgf@lib@sh@cnet@set@dash%
+    {\pgf@lib@sh@cnet@drawing@options}%
+    {\pgf@lib@sh@cnet@drawing@dashpattern}%
+    {\pgf@lib@sh@cnet@drawing@dashphase}%
+    {#1}%
+}%
+
+% ----------------------------------------------------------------------------
+%  draw@drawing{<drawing code>}
+% ----------------------------------------------------------------------------
+\long\def\pgf@lib@sh@cnet@draw@drawing#1{%
+  \begin{pgfscope}%
+    \pgf@lib@sh@cnet@drawing@options%
+    #1%
+  \end{pgfscope}%
+}%
+% ----------------------------------------------------------------------------
+
+
+% ----------------------------------------------------------------------------
+%  picture@interior@dimensions{\pgfpoint{w}{h}}
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@picture@interior@dimensions#1{%
+  \pgf@process{#1}
+  \pgfmathsetlength\pgf@xa{\pgfkeysvalueof{/pgf/cnet/picture minimum width}}%
+  \pgfmathsetlength\pgf@xb{\pgfkeysvalueof{/pgf/cnet/picture inner xsep}}%
+  \advance \pgf@xa by-2\pgf@xb%
+  \ifdim\pgf@x<\pgf@xa%
+    \pgf@x=\pgf@xa%
+  \fi%
+  \pgfmathsetlength\pgf@ya{\pgfkeysvalueof{/pgf/cnet/picture minimum height}}%
+  \pgfmathsetlength\pgf@yb{\pgfkeysvalueof{/pgf/cnet/picture inner ysep}}%
+  \advance \pgf@ya by-2\pgf@yb%
+  \ifdim\pgf@y<\pgf@ya%
+    \pgf@y=\pgf@ya%
+  \fi%
+}%
+% ----------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------
+%  picture@dimensions{\pgfpoint{w}{h}}
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@picture@dimensions#1{%
+  \pgf@process{\pgf@lib@sh@cnet@picture@interior@dimensions{#1}}%
+  \pgfmathsetlength\pgf@xa{\pgfkeysvalueof{/pgf/cnet/picture inner xsep}}%
+  \pgfmathsetlength\pgf@ya{\pgfkeysvalueof{/pgf/cnet/picture inner ysep}}%
+  \advance \pgf@x by 2\pgf@xa%
+  \advance \pgf@y by 2\pgf@ya%
+}%
+% ----------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------
+%  picture@northeast{\pgfpoint{w}{h}}
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@picture@northeast#1{%
+  \pgf@process{\pgf@lib@sh@cnet@picture@dimensions{#1}}%
+  \pgf@x=.5\pgf@x%
+  \pgf@y=.5\pgf@y%
+  \pgfmathsetlength\pgf@xa{\pgfkeysvalueof{/pgf/cnet/picture outer xsep}}%
+  \pgfmathsetlength\pgf@ya{\pgfkeysvalueof{/pgf/cnet/picture outer ysep}}%
+  \advance\pgf@x by \pgf@xa%
+  \advance\pgf@y by \pgf@ya%
+}%
+% ----------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------
+%  picture@southwest{\pgfpoint{w}{h}}
+% ----------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@picture@southwest#1{%
+  \pgf@process{\pgf@lib@sh@cnet@picture@dimensions{#1}}%
+  \pgf@x=-.5\pgf@x%
+  \pgf@y=-.5\pgf@y%
+  \pgfmathsetlength\pgf@xa{\pgfkeysvalueof{/pgf/cnet/picture outer xsep}}%
+  \pgfmathsetlength\pgf@ya{\pgfkeysvalueof{/pgf/cnet/picture outer ysep}}%
+  \advance\pgf@x by-\pgf@xa%
+  \advance\pgf@y by-\pgf@ya%
+}%
+% ----------------------------------------------------------------------------
+
+% ---------------------------------------------------------------------------
+% Sets \pgf@y to the y-coordinate of the text base line.
+%
+% Additional settings used:
+%     - /pgf/cnet/picture inner ysep
+%     - /pgf/cnet/picture minimum height
+%     - /pgf/cnet/picture outer ysep
+%     - /pgf/cnet/picture text sep
+%
+% ---------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@text@yb#1{%
+  \pgfmathsetlength\pgf@ya{\pgfkeysvalueof{/pgf/cnet/picture text sep}}%
+  \ifpgf@lib@sh@cnet@text@placement@abovepicture%
+    \pgf@xb=\pgf@x
+    \pgf@process{\pgf@lib@sh@cnet@picture@northeast{#1}}%
+    \pgf@x=\pgf@xb
+    \advance\pgf@y by \pgf@ya%
+    \advance\pgf@y by \dp\pgfnodeparttextbox%
+  \else%
+    \pgf@xb=\pgf@x
+    \pgf@process{\pgf@lib@sh@cnet@picture@southwest{#1}}%
+    \pgf@x=\pgf@xb
+    \advance\pgf@y by-\pgf@ya%
+    \advance\pgf@y by-\ht\pgfnodeparttextbox%
+  \fi%
+}%
+% ---------------------------------------------------------------------------
+
+% ---------------------------------------------------------------------------
+%  text@northeast{\pgfpoint{w}{h}}
+% ---------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@text@northeast#1{%
+  \pgf@process{\pgf@lib@sh@cnet@text@yb{#1}}%
+  \advance\pgf@y by \ht\pgfnodeparttextbox%
+  \pgf@x=.5\wd\pgfnodeparttextbox%
+}%
+% ---------------------------------------------------------------------------
+
+% ---------------------------------------------------------------------------
+%  text@southwest{\pgfpoint{w}{h}}
+% ---------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@text@southwest#1{%
+  \pgf@process{\pgf@lib@sh@cnet@text@yb{#1}}%
+  \pgf@x=-.5\wd\pgfnodeparttextbox%
+  \advance\pgf@y by-\dp\pgfnodeparttextbox%
+}%
+% ---------------------------------------------------------------------------
+
+% ---------------------------------------------------------------------------
+% Sets \pgf@x and \pgf@y to the coordinates of the text base point.
+%
+% Additional settings used:
+%     - /pgf/cnet/picture inner ysep
+%     - /pgf/cnet/picture minimum height
+%     - /pgf/cnet/picture outer ysep
+%     - /pgf/cnet/picture text sep
+%
+% ---------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@text@base#1{%
+  \pgf@x=0pt%
+  \pgf@process{\pgf@lib@sh@cnet@text@yb{#1}}%
+}%
+
+% ---------------------------------------------------------------------------
+% Sets \pgf@x and \pgf@y to the coordinates of the text anchor point.
+%
+% Additional settings used:
+%     - /pgf/cnet/picture inner ysep
+%     - /pgf/cnet/picture minimum height
+%     - /pgf/cnet/picture outer ysep
+%     - /pgf/cnet/picture text sep
+%
+% ---------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@text@anchor#1{%
+  \pgf@x=-.5\wd\pgfnodeparttextbox%
+  \pgf@process{\pgf@lib@sh@cnet@text@yb{#1}}%
+}%
+
+% ---------------------------------------------------------------------------
+%  interior@northeast
+% ---------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@interior@northeast#1{%
+  \pgf@process{\pgf@lib@sh@cnet@picture@northeast{#1}}%
+  % x
+  \pgf@xa=.5\wd\pgfnodeparttextbox%
+  \ifdim\pgf@x<\pgf@xa%
+    \pgf@x=\pgf@xa%
+  \fi%
+  % y
+  \ifpgf@lib@sh@cnet@text@placement@abovepicture%
+    \pgf@process{\pgf@lib@sh@cnet@text@yb{#1}}%
+    \advance\pgf@y by \ht\pgfnodeparttextbox%
+  \fi%
+}%
+% ---------------------------------------------------------------------------
+
+% ---------------------------------------------------------------------------
+%  interior@southwest
+% ---------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@interior@southwest#1{%
+  \pgf@process{\pgf@lib@sh@cnet@picture@southwest{#1}}%
+  % x
+  \pgf@xa=-.5\wd\pgfnodeparttextbox%
+  \ifdim\pgf@xa<\pgf@x%
+    \pgf@x=\pgf@xa%
+  \fi%
+  % y
+  \ifpgf@lib@sh@cnet@text@placement@abovepicture%
+  \else%
+    \pgf@process{\pgf@lib@sh@cnet@text@yb{#1}}%
+    \advance\pgf@y by-\dp\pgfnodeparttextbox%
+  \fi%
+}%
+% ---------------------------------------------------------------------------
+
+% ---------------------------------------------------------------------------
+%  northeast{\pgfpoint{w}{h}}
+% ---------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@northeast#1{%
+  \pgf@process{\pgf@lib@sh@cnet@interior@northeast{#1}}%
+  %
+  % Calculate x
+  %
+  \pgfmathsetlength\pgf@xa{\pgfkeysvalueof{/pgf/inner xsep}}%
+  \advance\pgf@x by\pgf@xa%
+  \pgfmathsetlength\pgf@xa{\pgfkeysvalueof{/pgf/minimum width}}%
+  \pgf@xa=.5\pgf@xa%
+  \ifdim\pgf@x<\pgf@xa%
+    \pgf@x=\pgf@xa%
+  \fi%
+  \pgfmathsetlength\pgf@xa{\pgfkeysvalueof{/pgf/outer xsep}}%
+  \advance\pgf@x by\pgf@xa%
+  %
+  % Calculate y
+  %
+  \pgfmathsetlength\pgf@ya{\pgfkeysvalueof{/pgf/inner ysep}}%
+  \advance\pgf@y by\pgf@ya%
+  \pgfmathsetlength\pgf@ya{\pgfkeysvalueof{/pgf/minimum height}}%
+  \pgfmathsetlength\pgf@yb{\pgfkeysvalueof{/pgf/cnet/picture text sep}}%
+  \advance\pgf@ya by -\ht\pgfnodeparttextbox%
+  \advance\pgf@ya by -\dp\pgfnodeparttextbox%
+  \advance\pgf@ya by -\pgf@yb%
+  \pgf@ya=.5\pgf@ya%
+  \ifpgf@lib@sh@cnet@text@placement@abovepicture%
+    \advance\pgf@ya by \dp\pgfnodeparttextbox%
+    \advance\pgf@ya by \ht\pgfnodeparttextbox%
+    \advance\pgf@ya by \pgf@yb%
+  \fi%
+  \ifdim\pgf@y<\pgf@ya%
+    \pgf@y=\pgf@ya%
+  \fi%
+  \pgfmathsetlength\pgf@yc{\pgfkeysvalueof{/pgf/outer ysep}}%
+  \advance\pgf@y by\pgf@yc%
+}%
+% ---------------------------------------------------------------------------
+
+% ---------------------------------------------------------------------------
+%  southwest{\pgfpoint{w}{h}}
+% ---------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@southwest#1{%
+  \pgf@process{\pgf@lib@sh@cnet@interior@southwest{#1}}%
+  %
+  % Calculate x
+  %
+  \pgfmathsetlength\pgf@xa{\pgfkeysvalueof{/pgf/inner xsep}}%
+  \advance\pgf@x by-\pgf@xa%
+  \pgfmathsetlength\pgf@xa{\pgfkeysvalueof{/pgf/minimum width}}%
+  \pgf@xa=-.5\pgf@xa%
+  \ifdim\pgf@xa<\pgf@x%
+    \pgf@x=\pgf@xa%
+  \fi%
+  \pgfmathsetlength\pgf@xa{\pgfkeysvalueof{/pgf/outer xsep}}%
+  \advance\pgf@x by-\pgf@xa%
+  %
+  % Calculate y
+  %
+  \pgfmathsetlength\pgf@ya{\pgfkeysvalueof{/pgf/inner ysep}}%
+  \advance\pgf@y by-\pgf@ya%
+  \pgfmathsetlength\pgf@ya{\pgfkeysvalueof{/pgf/minimum height}}%
+  \pgfmathsetlength\pgf@yb{\pgfkeysvalueof{/pgf/cnet/picture text sep}}%
+  \advance\pgf@ya by -\ht\pgfnodeparttextbox%
+  \advance\pgf@ya by -\dp\pgfnodeparttextbox%
+  \advance\pgf@ya by -\pgf@yb%
+  \pgf@ya=.5\pgf@ya%
+  \ifpgf@lib@sh@cnet@text@placement@belowpicture%
+    \advance\pgf@ya by \ht\pgfnodeparttextbox%
+    \advance\pgf@ya by \dp\pgfnodeparttextbox%
+    \advance\pgf@ya by \pgf@yb%
+  \fi%
+  \pgf@ya=-\pgf@ya%
+
+  \ifdim\pgf@ya<\pgf@y%
+    \pgf@y=\pgf@ya%
+  \fi%
+  \pgfmathsetlength\pgf@yc{\pgfkeysvalueof{/pgf/outer ysep}}%
+  \advance\pgf@y by\pgf@yc%
+}%
+
+
+% ---------------------------------------------------------------------------
+% \pgf@lib@sh@cnet@declare@rectanglesavedanchors{\pgfpoint{w}{h}}
+% ---------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@declare@rectanglesavedanchors#1{%
+  \savedanchor\northeast{%
+    \pgf@process{\pgf@lib@sh@cnet@northeast{#1}}%
+  }%
+  \savedanchor\southwest{%
+    \pgf@process{\pgf@lib@sh@cnet@southwest{#1}}%
+  }%
+  \savedanchor\textbase{%
+    \pgf@process{\pgf@lib@sh@cnet@text@base{#1}}%
+  }%
+  \savedanchor\textanchor{%
+    \pgf@process{\pgf@lib@sh@cnet@text@anchor{#1}}%
+  }%
+}%
+
+% ---------------------------------------------------------------------------
+% \pgf@lib@sh@cnet@declare@picturesavedanchors{\pgfpoint{w}{h}}
+% ---------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@declare@picturesavedanchors#1{%
+  \savedanchor\picturenortheast{%
+    \pgf@process{\pgf@lib@sh@cnet@picture@northeast{#1}}
+  }%
+  \savedanchor\picturesouthwest{%
+    \pgf@process{\pgf@lib@sh@cnet@picture@southwest{#1}}
+  }%
+}%
+
+% ---------------------------------------------------------------------------
+% \pgf@lib@sh@cnet@declare@anchorbordersavedanchors{\pgfpoint{w}{h}}
+% ---------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@declare@anchorbordersavedanchors#1{%
+  \savedanchor\anchorbordersouthwest{%
+    \ifpgf@lib@sh@cnet@anchorborder@symbolborder%
+      \pgf@process{\pgf@lib@sh@cnet@southwest{#1}}%
+    \else\ifpgf@lib@sh@cnet@anchorborder@textborder%
+      \pgf@process{\pgf@lib@sh@cnet@text@southwest{#1}}%
+    \else%
+      \pgf@process{\pgf@lib@sh@cnet@picture@southwest{#1}}%
+    \fi\fi%
+  }%
+  \savedanchor\anchorbordernortheast{%
+    \ifpgf@lib@sh@cnet@anchorborder@symbolborder%
+      \pgf@process{\pgf@lib@sh@cnet@northeast{#1}}%
+    \else\ifpgf@lib@sh@cnet@anchorborder@textborder%
+      \pgf@process{\pgf@lib@sh@cnet@text@northeast{#1}}%
+    \else%
+      \pgf@process{\pgf@lib@sh@cnet@picture@northeast{#1}}%
+    \fi\fi%
+  }%
+}%
+
+% ---------------------------------------------------------------------------
+% \pgf@lib@sh@cnet@declare@savedanchors{\pgfpoint{w}{h}}
+% ---------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@declare@savedanchors#1{%
+  \pgf@lib@sh@cnet@declare@picturesavedanchors{#1}%
+  \pgf@lib@sh@cnet@declare@rectanglesavedanchors{#1}%
+  \pgf@lib@sh@cnet@declare@anchorbordersavedanchors{#1}%
+}%
+
+% ---------------------------------------------------------------------------
+% \pgf@lib@sh@cnet@declare@beforebackgroundpath{<drawing code>}
+% ---------------------------------------------------------------------------
+\long\def\pgf@lib@sh@cnet@declare@beforebackgroundpath#1{%
+  \beforebackgroundpath{%
+    \begin{pgfscope}%
+      \pgf@lib@sh@cnet@picture@mode%
+      \pgf@lib@sh@cnet@draw@picture@outline%
+      \pgf@lib@sh@cnet@draw@drawing{#1}%
+    \end{pgfscope}%
+  }%
+}%
+
+%%% ===========================================================================
+%%% Use image.
+%%%
+%%% Usage:
+%%%   \pgf@lib@sh@cnet@drawimage{<image>}
+%%% Examle:
+%%%   \pgf@lib@sh@cnet@drawimage{cisco/router}
+%%% ===========================================================================
+%%\def\pgf@lib@sh@cnet@drawimage#1{
+%%  \picturesouthwest
+%%  \pgftext[at=\pgfpoint{-.5em}{\pgf@y},base]{
+%%    \pgf@process{\picturenortheast}
+%%    \pgf@xa=\pgf@x
+%%    \pgf@ya=\pgf@y
+%%    \pgf@process{\picturesouthwest}
+%%    \advance\pgf@xa by-\pgf@x
+%%    \advance\pgf@ya by-\pgf@y
+%%    \pgfimage[width=\pgf@xa,height=\pgf@ya,interpolate=true]{#1}
+%%  }
+%%}
+%%
+
+% ---------------------------------------------------------------------------
+% Inherit cnet symbol anchors related to rectangle
+% ---------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@inheritrectangleanchors[#1]{%
+  \inheritanchor[#1]{center}%
+  \inheritanchor[#1]{north}%
+  \inheritanchor[#1]{south}%
+  \inheritanchor[#1]{west}%
+  \inheritanchor[#1]{north west}%
+  \inheritanchor[#1]{south west}%
+  \inheritanchor[#1]{east}%
+  \inheritanchor[#1]{north east}%
+  \inheritanchor[#1]{south east}%
+  \inheritanchor[#1]{text}%
+  \inheritanchor[#1]{mid}%
+  \inheritanchor[#1]{mid west}%
+  \inheritanchor[#1]{mid east}%
+  \inheritanchor[#1]{base}%
+  \inheritanchor[#1]{base west}%
+  \inheritanchor[#1]{base east}%
+}%
+
+% ---------------------------------------------------------------------------
+% Inherit cnet symbol anchors related to picture
+% ---------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@inheritpictureanchors[#1]{%
+  \inheritanchor[#1]{picture center}%
+  \inheritanchor[#1]{picture north east}%
+  \inheritanchor[#1]{picture north west}%
+  \inheritanchor[#1]{picture south east}%
+  \inheritanchor[#1]{picture south west}%
+  \inheritanchor[#1]{picture east}%
+  \inheritanchor[#1]{picture west}%
+  \inheritanchor[#1]{picture north}%
+  \inheritanchor[#1]{picture south}%
+}%
+
+% ---------------------------------------------------------------------------
+% Inherit all cnet symbol anchors
+% ---------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@inheritsymbolanchors[#1]{%
+  \pgf@lib@sh@cnet@inheritrectangleanchors[#1]%
+  \pgf@lib@sh@cnet@inheritpictureanchors[#1]%
+}%
+
+% ---------------------------------------------------------------------------
+% Generic shape that serves as base for other cnet symbols
+% ---------------------------------------------------------------------------
+\pgfdeclareshape{cnet symbol}{
+  \anchorborder{
+    \pgf@xb=\pgf@x% xb/yb is target
+    \pgf@yb=\pgf@y
+    \anchorbordersouthwest
+    \pgf@xa=\pgf@x% xa/ya is se
+    \pgf@ya=\pgf@y
+    \anchorbordernortheast
+    \advance\pgf@x by-\pgf@xa
+    \advance\pgf@y by-\pgf@ya
+    \pgf@xc=.5\pgf@x% x/y is half width/height
+    \pgf@yc=.5\pgf@y
+    \advance\pgf@xa by\pgf@xc% xa/ya becomes center
+    \advance\pgf@ya by\pgf@yc
+    \edef\pgf@marshal{
+      \noexpand\pgfpointborderrectangle
+      {\noexpand\pgfqpoint{\the\pgf@xb}{\the\pgf@yb}}
+      {\noexpand\pgfqpoint{\the\pgf@xc}{\the\pgf@yc}}
+    }
+    \pgf@process{\pgf@marshal}
+    \advance\pgf@x by\pgf@xa
+    \advance\pgf@y by\pgf@ya
+  }
+
+  \pgf@lib@sh@cnet@declare@savedanchors{
+    \pgfpoint
+      {\pgfkeysvalueof{/pgf/cnet/drawing width}}
+      {\pgfkeysvalueof{/pgf/cnet/drawing height}}
+  }
+
+  \inheritanchor[from=rectangle]{center}
+  \inheritanchor[from=rectangle]{north}
+  \inheritanchor[from=rectangle]{south}
+  \inheritanchor[from=rectangle]{west}
+  \inheritanchor[from=rectangle]{north west}
+  \inheritanchor[from=rectangle]{south west}
+  \inheritanchor[from=rectangle]{east}
+  \inheritanchor[from=rectangle]{north east}
+  \inheritanchor[from=rectangle]{south east}
+
+  \anchor{text}{\textanchor}
+
+  \anchor{mid}{
+    \pgf@process{\textbase}
+    \pgfmathsetlength\pgf@ya{.5ex}
+    \advance\pgf@y by \pgf@ya
+  }
+
+  \anchor{mid west}{
+    \pgf@process{\southwest}
+    \pgf@xa=\pgf@x
+    \pgf@process{\textbase}
+    \pgf@x=\pgf@xa
+    \pgfmathsetlength\pgf@ya{.5ex}
+    \advance\pgf@y by \pgf@ya
+  }
+
+  \anchor{mid east}{
+    \pgf@process{\northeast}
+    \pgf@xa=\pgf@x
+    \pgf@process{\textbase}
+    \pgf@x=\pgf@xa
+    \pgfmathsetlength\pgf@ya{.5ex}
+    \advance\pgf@y by \pgf@ya
+  }
+
+  \anchor{base}{\textbase}
+
+  \anchor{base west}{
+    \pgf@process{\southwest}
+    \pgf@xa=\pgf@x
+    \pgf@process{\textbase}
+    \pgf@x=\pgf@xa
+  }
+
+  \anchor{base east}{
+    \pgf@process{\northeast}
+    \pgf@xa=\pgf@x
+    \pgf@process{\textbase}
+    \pgf@x=\pgf@xa
+  }
+
+  \anchor{picture center}{
+    \pgfpointorigin
+  }
+
+  \anchor{picture north east}{
+    \picturenortheast
+  }
+
+  \anchor{picture south west}{
+    \picturesouthwest
+  }
+
+  \anchor{picture north}{
+    \pgf@process{\picturesouthwest}
+    \pgf@xa=\pgf@x
+    \pgf@process{\picturenortheast}
+    \pgf@x=.5\pgf@x
+    \advance \pgf@x by.5\pgf@xa
+  }
+
+  \anchor{picture south}{
+    \pgf@process{\picturenortheast}
+    \pgf@xa=\pgf@x
+    \pgf@process{\picturesouthwest}
+    \pgf@x=.5\pgf@x
+    \advance \pgf@x by.5\pgf@xa
+  }
+
+  \anchor{picture west}{
+    \pgf@process{\picturenortheast}
+    \pgf@ya=\pgf@y
+    \pgf@process{\picturesouthwest}
+    \pgf@y=.5\pgf@y
+    \advance \pgf@y by.5\pgf@ya
+  }
+
+  \anchor{picture east}{
+    \pgf@process{\picturesouthwest}
+    \pgf@ya=\pgf@y
+    \pgf@process{\picturenortheast}
+    \pgf@y=.5\pgf@y
+    \advance \pgf@y by.5\pgf@ya
+  }
+
+  \anchor{picture north west}{
+    \pgf@process{\picturesouthwest}
+    \pgf@xa=\pgf@x
+    \pgf@process{\picturenortheast}
+    \pgf@x=\pgf@xa
+  }
+
+  \anchor{picture south east}{
+    \pgf@process{\picturenortheast}
+    \pgf@xa=\pgf@x
+    \pgf@process{\picturesouthwest}
+    \pgf@x=\pgf@xa
+  }
+
+  \inheritbackgroundpath[from=rectangle]
+  \pgf@lib@sh@cnet@declare@beforebackgroundpath{\pgf@lib@sh@cnet@drawing}
+}
+
+\pgfkeys{/pgf/.cd,
+  cnet symbol size/.initial            =3em,
+%%  cnet symbol color/.code              ={\pgf@lib@sh@cnet@set@symbol@strokecolor{#1}},
+%%  cnet symbol fill/.code               ={\pgf@lib@sh@cnet@set@symbol@fillcolor{#1}},
+%%  cnet symbol line width/.code         ={\pgf@lib@sh@cnet@set@symbol@linewidth{#1}},
+}
+
+% ---------------------------------------------------------------------------
+%  symbol@options
+% ---------------------------------------------------------------------------
+\let\pgf@lib@sh@cnet@symbol@options\pgfutil@empty%
+%%\let\pgf@lib@sh@cnet@symbol@strokecolor\pgfutil@empty%
+%%\let\pgf@lib@sh@cnet@symbol@fillcolor\pgfutil@empty%
+%%\let\pgf@lib@sh@cnet@symbol@linewidth\pgfutil@empty%
+% ---------------------------------------------------------------------------
+%%\def\pgf@lib@sh@cnet@set@symbol@strokecolor#1{
+%%  \pgf@lib@sh@cnet@addoption{\pgf@lib@sh@cnet@symbol@options}{\pgfsetstrokecolor{#1}}%
+%%  \def\pgf@lib@sh@cnet@symbol@strokecolor{#1}%
+%%}
+%%\def\pgf@lib@sh@cnet@set@symbol@fillcolor#1{
+%%  \pgf@lib@sh@cnet@addoption{\pgf@lib@sh@cnet@symbol@options}{\pgfsetfillcolor{#1}}%
+%%  \def\pgf@lib@sh@cnet@symbol@fillcolor{#1}%
+%%}
+%%\def\pgf@lib@sh@cnet@set@symbol@linewidth#1{%
+%%  \pgf@lib@sh@cnet@addoption{\pgf@lib@sh@cnet@symbol@options}{\pgfsetlinewidth{#1}}%
+%%  \def\pgf@lib@sh@cnet@symbol@linewidth{#1}%
+%%}%
+% ----------------------------------------------------------------------------
+
+
+
+% ----------------------------------------------------------------------------
+%  draw@symbol{<drawing code>}
+% ----------------------------------------------------------------------------
+\long\def\pgf@lib@sh@cnet@draw@symbol#1{%
+  \begin{pgfscope}%
+    \pgfsetxvec{\symbolxvec}
+    \pgfsetyvec{\symbolyvec}
+    \begin{pgfscope}%
+      \pgf@lib@sh@cnet@symbol@options%
+      #1%
+    \end{pgfscope}%
+  \end{pgfscope}%
+}%
+% ----------------------------------------------------------------------------
+
+% ---------------------------------------------------------------------------
+% declare@symbol@beforebackgroundpath{<drawing code>}
+% ---------------------------------------------------------------------------
+\long\def\pgf@lib@sh@cnet@declare@symbol@beforebackgroundpath#1{%
+  \pgf@lib@sh@cnet@declare@beforebackgroundpath{\pgf@lib@sh@cnet@draw@symbol{#1}}
+}%
+% ---------------------------------------------------------------------------
+
+% ---------------------------------------------------------------------------
+% symbol@dimensions{xscale}{yscale}{\pgfmathsetlength\pgf@x{size}}
+% ---------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@symbol@dimensions#1#2#3{%
+  \pgf@process{#3}%
+  \pgfmathparse{#2} \pgf@y=\pgfmathresult\pgf@x%
+  \pgfmathparse{#1} \pgf@x=\pgfmathresult\pgf@x%
+}%
+% ---------------------------------------------------------------------------
+
+% ---------------------------------------------------------------------------
+% declare@symbolsavedanchors{xscale}{yscale}{\pgfmathsetlength\pgf@x{size}}
+% ---------------------------------------------------------------------------
+\def\pgf@lib@sh@cnet@declare@symbolsavedanchors#1#2#3{%
+  \pgf@process{#3}
+  \pgf@lib@sh@cnet@declare@savedanchors{\pgf@lib@sh@cnet@symbol@dimensions{#1}{#2}{#3}}%
+  \savedanchor\symbolxvec{%
+    \pgf@process{#3}
+    \pgf@x=.5\pgf@x
+    \pgf@y=0pt%
+  }%
+  \savedanchor\symbolyvec{%
+    \pgf@process{#3}
+    \pgf@y=.5\pgf@x
+    \pgf@x=0pt%
+  }%
+}%
