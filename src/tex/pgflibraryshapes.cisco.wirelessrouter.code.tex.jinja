@@ -1,0 +1,9 @@
+(@ extends "pgflibraryshapes.cnet.main.code.tex.jinja" @)
+
+(@ set pgf = svgtopgf(loadsvg("cisco.wirelessrouter.svg")) @)
+(@ set family = "cisco" @)
+(@ set symbol = "wireless router" @)
+
+(@ block beforebackgroundpath @)
+(( pgf.code | indent(4)))
+(@ endblock @)

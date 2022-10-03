@@ -1,0 +1,8 @@
+(@ extends "pgflibraryshapes.cnet.main.code.tex.jinja" @)
+
+(@ set pgf = svgtopgf(loadsvg("cnet.monitor.svg")) @)
+(@ set symbol = "monitor" @)
+
+(@ block beforebackgroundpath @)
+(( pgf.code | indent(4) ))
+(@ endblock @)

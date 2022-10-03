@@ -1,0 +1,9 @@
+(@ extends "pgflibraryshapes.cnet.main.code.tex.jinja" @)
+
+(@ set pgf = svgtopgf(loadsvg("cisco.macintosh.svg")) @)
+(@ set family = "cisco" @)
+(@ set symbol = "macintosh" @)
+
+(@ block beforebackgroundpath @)
+(( pgf.code | indent(4)))
+(@ endblock @)

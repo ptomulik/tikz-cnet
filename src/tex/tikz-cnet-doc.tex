@@ -7,8 +7,28 @@
 \input{pgfmanual-en-macros.tex}
 
 \usetikzlibrary{shapes.cnet.symbol}
-\usetikzlibrary{shapes.cnet.car}
 \usetikzlibrary{shapes.cnet.symbol.test}
+
+\usetikzlibrary{shapes.cnet.car}
+\usetikzlibrary{shapes.cnet.freezer}
+\usetikzlibrary{shapes.cnet.laptop}
+\usetikzlibrary{shapes.cnet.monitor}
+\usetikzlibrary{shapes.cnet.rfwaves}
+\usetikzlibrary{shapes.cnet.smartphone}
+
+\usetikzlibrary{shapes.cisco.100basethub}
+\usetikzlibrary{shapes.cisco.cloud}
+\usetikzlibrary{shapes.cisco.firewall}
+\usetikzlibrary{shapes.cisco.key}
+\usetikzlibrary{shapes.cisco.laptop}
+\usetikzlibrary{shapes.cisco.macintosh}
+\usetikzlibrary{shapes.cisco.macwoman}
+\usetikzlibrary{shapes.cisco.manwoman}
+\usetikzlibrary{shapes.cisco.pcman}
+\usetikzlibrary{shapes.cisco.pc}
+\usetikzlibrary{shapes.cisco.router}
+\usetikzlibrary{shapes.cisco.wirelessrouter}
+\usetikzlibrary{shapes.cisco.workstation}
 
 \title{\tikz{\node[cnet car]{}}\\The \textsf{tikz-cnet} package}
 \author{Paweł Tomulik}
@@ -711,5 +731,162 @@ and~|cnet picture outer ysep|.
   \caption{Picture anchors of cnet symbol}
   \label{fig:cnet-symbol-picture-anchors}
 \end{figure}
+
+\section{Predefined symbols}
+\label{sec:predefined-symbols}
+
+\begin{stylekey}{/tikz/cnet car}
+Sets |shape={cnet car}|.
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cnet.car}}]
+\tikz{\node[cnet car] {};}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet freezer}
+Sets |shape={cnet freezer}|.
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cnet.freezer}}]
+\tikz{\node[cnet freezer] {};}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet laptop}
+Sets |shape={cnet laptop}|.
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cnet.laptop}}]
+\tikz{\node[cnet laptop] {};}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet monitor}
+Sets |shape={cnet monitor}|.
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cnet.monitor}}]
+\tikz{\node[cnet monitor] {};}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet rf waves}
+Sets |shape={cnet rf waves}|.
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cnet.rfwaves}}]
+\tikz{\node[cnet rf waves] {};}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cnet smartphone}
+Sets |shape={cnet smartphone}|.
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cnet.smartphone}}]
+\tikz{\node[cnet smartphone] {};}
+\end{codeexample}
+\end{stylekey}
+
+\subsection{Combinning symbols}
+\label{sec: combining-symbols}
+
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cnet.car}}]
+\begin{tikzpicture}
+  \node[cnet car] (S) {};
+  \node[cnet rf waves] (W) at (S.picture north) {};
+\end{tikzpicture}
+\end{codeexample}
+
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cnet.smartphone}}]
+\begin{tikzpicture}
+  \node[cnet smartphone] (S) {};
+  \node[cnet rf waves] (W) at (S.picture north) {};
+\end{tikzpicture}
+\end{codeexample}
+
+
+\section{Cisco network symbols}
+\label{sec:cisco-network-symbols}
+
+\begin{stylekey}{/tikz/cisco 100 BaseT hub}
+Sets |shape={cisco 100 BaseT hub}|.
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cisco.100basethub}}]
+\tikz{\node[cisco 100 BaseT hub] {};}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cisco cloud}
+Sets |shape={cisco cloud}|.
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cisco.cloud}}]
+\tikz{\node[cisco cloud] {};}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cisco firewall}
+Sets |shape={cisco firewall}|.
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cisco.firewall}}]
+\tikz{\node[cisco firewall] {};}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cisco key}
+Sets |shape={cisco key}|.
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cisco.key}}]
+\tikz{\node[cisco key] {};}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cisco laptop}
+Sets |shape={cisco laptop}|.
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cisco.laptop}}]
+\tikz{\node[cisco laptop] {};}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cisco macintosh}
+Sets |shape={cisco macintosh}|.
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cisco.macintosh}}]
+\tikz{\node[cisco macintosh] {};}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cisco mac woman}
+Sets |shape={cisco mac woman}|.
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cisco.macwoman}}]
+\tikz{\node[cisco mac woman] {};}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cisco man woman}
+Sets |shape={cisco man woman}|.
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cisco.manwoman}}]
+\tikz{\node[cisco man woman] {};}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cisco pc}
+Sets |shape={cisco pc}|.
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cisco.pc}}]
+\tikz{\node[cisco pc] {};}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cisco pc man}
+Sets |shape={cisco pc man}|.
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cisco.pcman}}]
+\tikz{\node[cisco pc man] {};}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cisco router}
+Sets |shape={cisco router}|.
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cisco.router}}]
+\tikz{\node[cisco router] {};}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cisco wireless router}
+Sets |shape={cisco wireless router}|.
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cisco.wirelessrouter}}]
+\tikz{\node[cisco wireless router] {};}
+\end{codeexample}
+\end{stylekey}
+
+\begin{stylekey}{/tikz/cisco workstation}
+Sets |shape={cisco workstation}|.
+\begin{codeexample}[preamble={\usetikzlibrary{shapes.cisco.workstation}}]
+\tikz{\node[cisco workstation] {};}
+\end{codeexample}
+\end{stylekey}
 
 \end{document}

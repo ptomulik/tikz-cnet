@@ -1,0 +1,9 @@
+(@ extends "pgflibraryshapes.cnet.main.code.tex.jinja" @)
+
+(@ set pgf = svgtopgf(loadsvg("cisco.firewall.svg")) @)
+(@ set family = "cisco" @)
+(@ set symbol = "firewall" @)
+
+(@ block beforebackgroundpath @)
+(( pgf.code | indent(4)))
+(@ endblock @)

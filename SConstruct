@@ -19,7 +19,29 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE
 
-env = Environment()
+import os
+
+env = Environment(ENV={"PATH": os.environ["PATH"]})
+
+env['BUILDERS']['PGFGen'] = Builder(
+  action = '$PGFGEN $_PGFGEN_TEMPLATE_PATH_FLAGS $_PGFGEN_SVG_PATH_FLAGS -o $TARGET $SOURCE',
+  suffix = '.tex',
+  src_suffix = '.tex.jinja'
+)
+env.SetDefault(
+    PGFGEN='pgfgen',
+    PGFGEN_TEMPLATE_PATH_PREFIX="-T ",
+    PGFGEN_TEMPLATE_PATH_SUFFIX="",
+    PGFGEN_TEMPLATE_PATH=[],
+    PGFGEN_SVG_PATH_PREFIX="-S ",
+    PGFGEN_SVG_PATH_SUFFIX="",
+    PGFGEN_SVG_PATH=[],
+    _PGFGEN_TEMPLATE_PATH_FLAGS='${_concat(PGFGEN_TEMPLATE_PATH_PREFIX, PGFGEN_TEMPLATE_PATH, PGFGEN_TEMPLATE_PATH_SUFFIX, __env__, RDirs, TARGET, SOURCE, affect_signature=False)}',
+    _PGFGEN_SVG_PATH_FLAGS='${_concat(PGFGEN_SVG_PATH_PREFIX, PGFGEN_SVG_PATH, PGFGEN_SVG_PATH_SUFFIX, __env__, RDirs, TARGET, SOURCE, affect_signature=False)}'
+)
+
+env.Append(PGFGEN_TEMPLATE_PATH=[env.Dir('.'), env.Dir('src/templates')])
+env.Append(PGFGEN_SVG_PATH=[env.Dir('src/svg')])
 
 VariantDir(variant_dir = 'build', src_dir = 'src', duplicate = 1)
 SConscript('build/SConscript', exports = ['env'])

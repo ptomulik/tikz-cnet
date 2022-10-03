@@ -1,0 +1,27 @@
+% Copyright 2022 by Paweł Tomulik
+
+\ProvidesFileRCS{pgflibraryshapes.(( family | default("cnet") )).(( symbol | replace(" ","") | lower)).code.tex}
+
+\usepgflibrary{shapes.cnet.symbol}
+(@ block preamble @)
+(@ endblock @)
+
+% ---------------------------------------------------------------------------
+\pgfdeclareshape{(( family | default("cnet") )) (( symbol ))}{
+  \inheritanchorborder[from={cnet symbol}]
+
+  \pgf@lib@sh@cnet@declare@symbolsavedanchors%
+    {(( pgf.bbox.xmax ))}{(( pgf.bbox.ymax ))}%
+    {\pgfmathsetlength\pgf@x{\pgfkeysvalueof{/pgf/cnet symbol size}}}%
+
+  \pgf@lib@sh@cnet@inheritsymbolanchors[from={cnet symbol}]
+
+  \inheritbackgroundpath[from={cnet symbol}]
+
+  \pgf@lib@sh@cnet@declare@symbol@beforebackgroundpath{%
+    (@ block beforebackgroundpath @)
+    (@ endblock @)
+  }%
+}
+
+% vim: ft=tex:

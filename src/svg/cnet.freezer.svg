@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="262pt"
+   height="460pt"
+   id="svg4977"
+   sodipodi:version="0.32"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   version="1.0"
+   sodipodi:docname="cnet.freezer.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs3" />
+  <sodipodi:namedview
+     inkscape:document-units="mm"
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.34648233"
+     inkscape:cx="-336.23649"
+     inkscape:cy="470.44247"
+     inkscape:current-layer="layer1"
+     inkscape:window-width="1920"
+     inkscape:window-height="1015"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata4">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="Top Hinge"
+       style="fill:#f57900;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 313.6736,12.086287 C 321.2493,14.356772 321.354,17.805398 322.5175,19.955088 L 306.3391,17.917192"
+       sodipodi:nodetypes="ccc" />
+    <path
+       id="Edge Stripe"
+       style="fill:#808080;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 169.44658,553.68618 L 313.02621,465.41328 L 312.641,476.91573 L 159.42202,571.39001 L 152.04847,10.169262 L 166.08512,9.248343 L 164.86502,214.08376 L 316.47855,184.93167 L 314.44395,198.72813 L 164.41038,222.85902"
+       sodipodi:nodetypes="cccccccccc" />
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 322.38067,189.65624 L 321.44999,16.286062 L 163.90599,8.5212519 L 164.44078,213.51401 M 322.18544,195.51686 L 322.55949,464.31729 L 168.20156,555.0302 L 164.07707,222.39684 M 154.52404,8.9661541 L 4.6724591,37.225522 L 3.6497541,487.50091 L 159.64636,571.85829 L 154.52404,8.9661541 z "
+       id="The box itself"
+       sodipodi:nodetypes="cccccccsccccc" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 193.03629,190.07475 -10.5731,0.92174 c -2.67509,0.063 -1.88957,-5.04576 1.04376,-5.44142 l 6.14103,-0.82834 c 2.77445,-0.39039 3.91113,-0.64773 3.83254,-2.64381 L 192.42831,48.156106 c 0,-14.22623 -4.12793,-17.840184 -10.06495,-25.58683 0,0 -0.32697,-2.63133 2.65399,-2.629506 2.98097,0.0018 5.51173,2.714536 5.51173,2.714536 5.07983,5.794857 10.70343,13.458 10.70343,24.865451 l 0.18638,133.293513 c -0.49519,5.97142 -3.141,8.36135 -8.3826,9.26148 z"
+       id="Top Handle"
+       sodipodi:nodetypes="ccscccczcccc" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 193.8877,232.12529 -11.40519,-0.0746 c -4.4592,0.18566 -1.69968,5.64751 2.33406,5.75678 l 4.92833,0.1335 c 0,0 2.92025,0.91216 2.87936,4.88421 l 1.95764,147.44848 c -0.55469,9.77705 -7.68778,14.12275 -12.66497,25.58684 0,0 -1.59575,3.10102 2.41286,3.1761 4.0086,0.0751 7.61505,-3.1992 7.61505,-3.1992 4.2222,-8.88131 11.87449,-14.61469 12.23985,-24.92742 l -0.85311,-149.64266 c 0.093,-5.09538 -2.04266,-8.56056 -5.56872,-8.95016 z"
+       id="Bottom Handle"
+       sodipodi:nodetypes="ccscccczccccc" />
+  </g>
+</svg>
