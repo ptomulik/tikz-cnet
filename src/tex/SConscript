@@ -24,11 +24,15 @@ Import('env')
 doc = env.PDF('tikz-cnet-doc.tex')
 
 env.Depends(doc, [
+
     'pgflibraryshapes.cnet.symbol.code.tex',
     'tikzlibraryshapes.cnet.symbol.code.tex',
     'tikzlibraryshapes.cnet.symbol.test.code.tex',
 
      # cnet symbols
+    'pgflibraryshapes.cnet.code.tex',
+    'tikzlibraryshapes.cnet.code.tex',
+
     'tikzlibraryshapes.cnet.car.code.tex',
     'pgflibraryshapes.cnet.car.code.tex',
     'tikzlibraryshapes.cnet.freezer.code.tex',
@@ -43,6 +47,9 @@ env.Depends(doc, [
     'pgflibraryshapes.cnet.smartphone.code.tex',
 
     # cisco symbols
+    'pgflibraryshapes.cisco.code.tex',
+    'tikzlibraryshapes.cisco.code.tex',
+
     'tikzlibraryshapes.cisco.100basethub.code.tex',
     'pgflibraryshapes.cisco.100basethub.code.tex',
     'tikzlibraryshapes.cisco.cloud.code.tex',
