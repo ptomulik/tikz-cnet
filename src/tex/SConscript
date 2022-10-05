@@ -24,7 +24,6 @@ Import('env')
 doc = env.PDF('tikz-cnet-doc.tex')
 
 env.Depends(doc, [
-
     'pgflibraryshapes.cnet.symbol.code.tex',
     'tikzlibraryshapes.cnet.symbol.code.tex',
     'tikzlibraryshapes.cnet.symbol.test.code.tex',
@@ -33,71 +32,45 @@ env.Depends(doc, [
     'pgflibraryshapes.cnet.code.tex',
     'tikzlibraryshapes.cnet.code.tex',
 
-    'tikzlibraryshapes.cnet.car.code.tex',
-    'pgflibraryshapes.cnet.car.code.tex',
-    'tikzlibraryshapes.cnet.freezer.code.tex',
-    'pgflibraryshapes.cnet.freezer.code.tex',
-    'tikzlibraryshapes.cnet.laptop.code.tex',
-    'pgflibraryshapes.cnet.laptop.code.tex',
-    'tikzlibraryshapes.cnet.monitor.code.tex',
-    'pgflibraryshapes.cnet.monitor.code.tex',
-    'tikzlibraryshapes.cnet.rfwaves.code.tex',
-    'pgflibraryshapes.cnet.rfwaves.code.tex',
-    'tikzlibraryshapes.cnet.smartphone.code.tex',
-    'pgflibraryshapes.cnet.smartphone.code.tex',
-
     # cisco symbols
     'pgflibraryshapes.cisco.code.tex',
     'tikzlibraryshapes.cisco.code.tex',
-
-    'tikzlibraryshapes.cisco.100basethub.code.tex',
-    'pgflibraryshapes.cisco.100basethub.code.tex',
-    'tikzlibraryshapes.cisco.cloud.code.tex',
-    'pgflibraryshapes.cisco.cloud.code.tex',
-    'tikzlibraryshapes.cisco.firewall.code.tex',
-    'pgflibraryshapes.cisco.firewall.code.tex',
-    'tikzlibraryshapes.cisco.key.code.tex',
-    'pgflibraryshapes.cisco.key.code.tex',
-    'tikzlibraryshapes.cisco.laptop.code.tex',
-    'pgflibraryshapes.cisco.laptop.code.tex',
-    'tikzlibraryshapes.cisco.macintosh.code.tex',
-    'pgflibraryshapes.cisco.macintosh.code.tex',
-    'tikzlibraryshapes.cisco.macwoman.code.tex',
-    'pgflibraryshapes.cisco.macwoman.code.tex',
-    'tikzlibraryshapes.cisco.manwoman.code.tex',
-    'pgflibraryshapes.cisco.manwoman.code.tex',
-    'tikzlibraryshapes.cisco.pc.code.tex',
-    'pgflibraryshapes.cisco.pc.code.tex',
-    'tikzlibraryshapes.cisco.pcman.code.tex',
-    'pgflibraryshapes.cisco.pcman.code.tex',
-    'tikzlibraryshapes.cisco.router.code.tex',
-    'pgflibraryshapes.cisco.router.code.tex',
-    'tikzlibraryshapes.cisco.wirelessrouter.code.tex',
-    'pgflibraryshapes.cisco.wirelessrouter.code.tex',
-    'tikzlibraryshapes.cisco.workstation.code.tex',
-    'pgflibraryshapes.cisco.workstation.code.tex',
 ])
 
-env.PGFGen('pgflibraryshapes.cnet.car.code.tex.jinja')
-env.PGFGen('pgflibraryshapes.cnet.freezer.code.tex.jinja')
-env.PGFGen('pgflibraryshapes.cnet.laptop.code.tex.jinja')
-env.PGFGen('pgflibraryshapes.cnet.monitor.code.tex.jinja')
-env.PGFGen('pgflibraryshapes.cnet.rfwaves.code.tex.jinja')
-env.PGFGen('pgflibraryshapes.cnet.smartphone.code.tex.jinja')
+symbols = [
+    # cnet
+    'cnet.car',
+    'cnet.freezer',
+    'cnet.laptop',
+    'cnet.monitor',
+    'cnet.rfwaves',
+    'cnet.smartphone',
+    'cnet.thermometer',
+    'cnet.trafficlights',
+    # cisco
+    'cisco.100basethub',
+    'cisco.cloud',
+    'cisco.firewall',
+    'cisco.key',
+    'cisco.laptop',
+    'cisco.macintosh',
+    'cisco.macwoman',
+    'cisco.manwoman',
+    'cisco.pc',
+    'cisco.pcman',
+    'cisco.router',
+    'cisco.wirelessrouter',
+    'cisco.workstation',
+]
 
-env.PGFGen('pgflibraryshapes.cisco.100basethub.code.tex.jinja')
-env.PGFGen('pgflibraryshapes.cisco.cloud.code.tex.jinja')
-env.PGFGen('pgflibraryshapes.cisco.firewall.code.tex.jinja')
-env.PGFGen('pgflibraryshapes.cisco.key.code.tex.jinja')
-env.PGFGen('pgflibraryshapes.cisco.laptop.code.tex.jinja')
-env.PGFGen('pgflibraryshapes.cisco.macintosh.code.tex.jinja')
-env.PGFGen('pgflibraryshapes.cisco.macwoman.code.tex.jinja')
-env.PGFGen('pgflibraryshapes.cisco.manwoman.code.tex.jinja')
-env.PGFGen('pgflibraryshapes.cisco.pc.code.tex.jinja')
-env.PGFGen('pgflibraryshapes.cisco.pcman.code.tex.jinja')
-env.PGFGen('pgflibraryshapes.cisco.router.code.tex.jinja')
-env.PGFGen('pgflibraryshapes.cisco.wirelessrouter.code.tex.jinja')
-env.PGFGen('pgflibraryshapes.cisco.workstation.code.tex.jinja')
+for symbol in symbols:
+    env.Depends(doc, [
+        f"pgflibraryshapes.{symbol}.code.tex",
+        f"tikzlibraryshapes.{symbol}.code.tex",
+    ])
+    pgf = env.PGFGen(f"pgflibraryshapes.{symbol}.code.tex.jinja")
+    env.Depends(pgf, f"../svg/{symbol}.svg")
+
 
 # Local Variables:
 # # tab-width:4
