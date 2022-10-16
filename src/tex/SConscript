@@ -47,6 +47,7 @@ symbols = [
     'cnet.smartphone',
     'cnet.thermometer',
     'cnet.trafficlights',
+    'cnet.wag54g',
     'cnet.workstation',
     # cisco
     'cisco.100basethub',
