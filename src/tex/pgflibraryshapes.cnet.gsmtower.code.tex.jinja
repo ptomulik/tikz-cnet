@@ -1,0 +1,8 @@
+(@ extends "pgflibraryshapes.cnet.main.code.tex.jinja" @)
+
+(@ set pgf = svgtopgf(loadsvg("cnet.gsmtower.svg")) @)
+(@ set symbol = "gsm tower" @)
+
+(@ block beforebackgroundpath @)
+(( pgf.code | indent(4) ))
+(@ endblock @)
