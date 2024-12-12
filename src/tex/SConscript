@@ -42,6 +42,7 @@ symbols = [
     'cnet.car',
     'cnet.freezer',
     'cnet.gsmtower',
+    'cnet.institution',
     'cnet.laptop',
     'cnet.monitor',
     'cnet.rfwaves',
