@@ -40,6 +40,7 @@ env.Depends(doc, [
 symbols = [
     # cnet
     'cnet.car',
+    'cnet.fileblank',
     'cnet.freezer',
     'cnet.gsmtower',
     'cnet.institution',
