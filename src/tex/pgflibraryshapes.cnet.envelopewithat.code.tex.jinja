@@ -1,0 +1,8 @@
+(@ extends "pgflibraryshapes.cnet.main.code.tex.jinja" @)
+
+(@ set pgf = svgtopgf(loadsvg("cnet.envelopewithat.svg")) @)
+(@ set symbol = "envelope with at" @)
+
+(@ block beforebackgroundpath @)
+(( pgf.code | indent(4) ))
+(@ endblock @)
